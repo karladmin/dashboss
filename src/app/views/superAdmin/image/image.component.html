@@ -1,0 +1,161 @@
+<app-base-header headerText="{{ 'local.slider' | translate }}">
+</app-base-header>
+<app-loader *ngIf="isLoading == true"></app-loader>
+<div
+  class="page-mt animate__animated animate__fadeInUp"
+  [perfectScrollbar]="{ suppressScrollX: true }"
+>
+  <div class="row mb-4">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-end">
+      <button
+        (click)="open(modalBasic)"
+        type="button"
+        class="btn-dark-blue m-1 btn-lg ml-4"
+      >
+        {{ "image.addNew" | translate }}
+      </button>
+    </div>
+    <div *ngFor="let item of imageData" class="imageData">
+      <div>
+        <img src="{{ item?.imageUri }}" (click)="open2(modalUpdate, item)" />
+      </div>
+      <div class="edit">
+        <p (click)="open2(modalUpdate, item)"><i class="fas fa-edit"></i></p>
+        <p (click)="open3(modalDelete, item)"><i class="fas fa-trash"></i></p>
+      </div>
+    </div>
+    <div>
+      <div class="imageData" *ngIf="!imageData">
+        <div>
+          <ngx-skeleton-loader
+            count="8"
+            animation="pulse"
+            appearance="circle"
+            [theme]="{
+              width: '200px',
+              height: '200px',
+              margin: '10px',
+              'border-radius': '10px'
+            }"
+          >
+          </ngx-skeleton-loader>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalBasic let-modal>
+  <div class="modal-header">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+      <h4 class="modal-title h4">
+        {{ "image.addNew" | translate }}
+        <span class="float-right">
+          <i class="fas fa-times" (click)="modal.dismiss('Cross click')"></i>
+        </span>
+      </h4>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="row mb-3">
+      <div class="col-sm-12 col-md-12 form-group mb-3">
+        <label class="text-label">{{ "image.addImage" | translate }}</label
+        ><br />
+        <img *ngIf="url" [src]="url" height="200" /> <br />
+        <input
+          id="profileimg"
+          type="file"
+          accept="image/*"
+          (change)="updateSource($event)"
+          class="form-control form-control-lg"
+        />
+        <br />
+        <button
+          [disabled]="url === ''"
+          class="btn text-capitalize btn-primary btn-lg mt-9 float-right"
+          (click)="modal.close('Save click')"
+        >
+          <span>{{ "image.save" | translate }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalUpdate let-modal>
+  <div class="modal-header">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+      <h4 class="modal-title h4">
+        {{ "image.updateImage" | translate }}
+        <span class="float-right">
+          <i class="fas fa-times" (click)="modal.dismiss('Cross click')"></i>
+        </span>
+      </h4>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="row mb-3">
+      <div class="col-sm-12 col-md-12 form-group mb-3">
+        <label class="text-label">{{ "image.updateImage" | translate }}</label
+        ><br />
+        <img *ngIf="url" [src]="url" height="200" /> <br />
+        <input
+          id="profileimg"
+          type="file"
+          accept="image/*"
+          (change)="updateSource($event)"
+          class="form-control form-control-lg"
+        />
+        <br />
+        <button
+          [disabled]="files === null"
+          class="btn text-capitalize btn-primary btn-lg mt-9 float-right"
+          (click)="modal.close('Save click')"
+        >
+          <span>{{ "image.save" | translate }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalDelete let-modal>
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-title">
+      {{ "image.deletion" | translate }}
+    </h6>
+    <button
+      type="button"
+      class="close"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      <strong
+        >{{ "image.areSureDelete" | translate }}
+        <span class="text-primary">{{ "image.this" | translate }}</span>
+        {{ "image.image" | translate }}</strong
+      >
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="modal.dismiss('cancel click')"
+    >
+      {{ "image.can" | translate }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="modal.close('Ok click')"
+    >
+      {{ "image.ye" | translate }}
+    </button>
+  </div>
+</ng-template>

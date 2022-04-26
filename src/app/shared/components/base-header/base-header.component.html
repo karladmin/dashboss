@@ -1,0 +1,42 @@
+<div class="px-15 animate__animated animate__fadeInDown">
+  <div class="main-header">
+    <div class="logo">
+      <div class="card-title mb-0 ml-3">
+        {{ headerText }}
+      </div>
+    </div>
+
+    <div style="margin: auto"></div>
+    <div class="header-part-right">
+      <i fullScreenWindow class="i-Full-Screen header-icon d-none d-sm-inline-block" role="button"></i>
+
+      <div class="menu-toggle" (click)="toggelSidebar()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div ngbDropdown [placement]="'bottom-right'" class="user col align-self-end float_right">
+        <img src="{{ profileData?.imageUri }}" id="userDropdown" ngbDropdownToggle alt="" />
+
+        <div ngbDropdownMenu aria-labelledby="userDropdown" class="header-account-dropdown" style="padding: 8px 16px">
+          <div class="dropdown-header" [routerLink]="'/super-admin/profile-edit'">
+            <i class="i-Lock-User mr-1"></i> {{ profileData?.name }}
+          </div>
+          <button [routerLink]="'/super-admin/profile-edit'" class="dropdown-item">
+            Account settings
+          </button>
+
+          <button class="dropdown-item" (click)="signOut()">Sign out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isTab" class="d-flex pl-3 oy-auto">
+    <div class="cursor-pointer header-tab" *ngFor="let item of tabContent; let i = index"
+      (click)="onTabChange(i, item)">
+      <div class="mb-0 mr-3" [ngClass]="{ 'active-tab card-title': item.active == true }">
+        {{ item.name }}
+      </div>
+    </div>
+  </div>
+</div>

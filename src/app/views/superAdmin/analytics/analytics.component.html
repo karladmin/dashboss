@@ -1,0 +1,216 @@
+<app-base-header headerText="{{ 'local.ana' | translate }}"></app-base-header>
+<app-loader *ngIf="loading == true"></app-loader>
+<div class="page-mt animate__animated animate__fadeInUp" [perfectScrollbar]="{ suppressScrollX: true }">
+  <div class="row mb-4">
+    <div class="col-xl-4 col-lg-6">
+      <div class="card card-stats mb-4 mb-xl-0">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col col-xl-6 col-lg-6 pr-0">
+              <p class="text-uppercase mb-1">
+                <span class="total_color">{{
+                  "analytics.total" | translate
+                  }}</span><br />{{ "analytics.appo" | translate }}
+              </p>
+              <span class="h5 mb-0 state-number total_color">{{
+                analyticsData?.tot_app
+                }}</span>
+            </div>
+            <div class="col col-xl-6 col-lg-6">
+              <div echarts [options]="totalAppointmentchart" [autoResize]="true" style="height: 60px; margin: auto 0px">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-6">
+      <div class="card card-stats mb-4 mb-xl-0">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col col-xl-6 col-lg-6 pr-0">
+              <p class="text-uppercase mb-1">
+                <span class="complete_color">{{
+                  "analytics.com" | translate
+                  }}</span><br />{{ "analytics.appo" | translate }}
+              </p>
+              <span class="h5 mb-0 state-number complete_color">{{
+                analyticsData?.com_app
+                }}</span>
+            </div>
+            <div class="col col-xl-6 col-lg-6">
+              <div echarts [options]="completeAppointmentchart" [autoResize]="true"
+                style="height: 60px; margin: auto 0px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-6">
+      <div class="card card-stats mb-4 mb-xl-0">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col col-xl-6 col-lg-6 pr-0">
+              <p class="text-uppercase mb-1">
+                <span class="cancel_color">
+                  {{ "analytics.can" | translate }}
+                </span>
+                <br />
+                {{ "analytics.appo" | translate }}
+              </p>
+              <span class="h5 mb-0 state-number cancel_color">{{
+                analyticsData?.cancel_app
+                }}</span>
+            </div>
+            <div class="col col-xl-6 col-lg-6">
+              <div echarts [options]="cancelAppointmentchart" [autoResize]="true"
+                style="height: 60px; margin: auto 0px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-xl-12 col-lg-12">
+      <div class="card card-stats mb-4 mb-xl-0">
+        <div class="card-body">
+          <p class="text-uppercase mb-1">
+            <span class="subscription_color">{{
+              "analytics.total" | translate
+              }}</span><br />{{ "analytics.sub" | translate }}
+          </p>
+          <div echarts [options]="salesChartBar" [autoResize]="true" style="height: 300px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-xl-6 col-lg-6">
+      <div class="card card-stats mb-4">
+        <div class="card-body">
+          <p class="text-uppercase mb-1">
+            <span class="subscription_owner_color">{{
+              "analytics.total" | translate
+              }}</span><br />{{ "analytics.owner" | translate }}
+          </p>
+          <div class="mt-5" echarts [options]="totalSubscriberOwnerchart" [autoResize]="true" style="height: 300px">
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-stats">
+        <div class="card-body">
+          <h5>{{ "analytics.pro" | translate }}</h5>
+          <div echarts [options]="monthNewUserChart" [autoResize]="true" style="height: 280px"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-6 col-lg-6">
+      <div class="card card-stats mb-4">
+        <div class="card-body">
+          <p class="text-uppercase mb-1">
+            <span class="application_user_color">{{
+              "analytics.total" | translate
+              }}</span><br />{{ "analytics.appuser" | translate }}
+          </p>
+          <div class="mt-5" echarts [options]="totalAppUserchart" [autoResize]="true" style="height: 300px"></div>
+        </div>
+      </div>
+      <div class="card card-stats">
+        <div class="card-body">
+          <h5>{{ "analytics.sys" | translate }}</h5>
+          <div class="mt-5" echarts [options]="socialLoginChart" [autoResize]="true" style="height: 300px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-xl-4 col-lg-6">
+      <div class="card card-stats mb-4 mb-xl-0">
+        <div class="card-body">
+          <div class="row align-items-end">
+            <div class="col col-xl-6 col-lg-6 pr-0">
+              <p class="text-uppercase mb-1">
+                <span class="total_color">{{
+                  "analytics.total" | translate
+                  }}</span><br />{{ "analytics.product" | translate }}
+              </p>
+              <span class="h5 mb-0 state-number total_color">{{
+                analyticsData?.tot_pro
+                }}</span>
+              <p class="mt-3 mb-0 state-header text-sm">
+                <span class="text-nowrap">{{
+                  "analytics.last" | translate
+                  }}</span>
+              </p>
+            </div>
+            <div class="col col-xl-6 col-lg-6">
+              <div echarts [options]="totapPurchaseChart" [autoResize]="true" style="height: 80px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-6">
+      <div class="card card-stats mb-4 mb-xl-0">
+        <div class="card-body">
+          <div class="row align-items-end">
+            <div class="col col-xl-6 col-lg-6 pr-0">
+              <p class="text-uppercase mb-1">
+                <span class="complete_color">{{
+                  "analytics.total" | translate
+                  }}</span><br />{{ "analytics.product" | translate }}
+              </p>
+              <span class="h5 mb-0 state-number complete_color">{{
+                analyticsData?.com_pro
+                }}</span>
+              <p class="mt-3 mb-0 state-header text-sm">
+                <span class="text-nowrap">{{
+                  "analytics.lasts" | translate
+                  }}</span>
+              </p>
+            </div>
+            <div class="col col-xl-6 col-lg-6">
+              <div echarts [options]="completeSalesChart" [autoResize]="true" style="height: 80px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-4 col-lg-6">
+      <div class="card card-stats mb-4 mb-xl-0">
+        <div class="card-body">
+          <div class="row align-items-end">
+            <div class="col col-xl-6 col-lg-6 pr-0">
+              <p class="text-uppercase mb-1">
+                <span class="cancel_color">{{
+                  "analytics.can" | translate
+                  }}</span><br />{{ "analytics.product" | translate }}
+              </p>
+              <span class="h5 mb-0 state-number cancel_color">
+                {{ analyticsData?.cancel_pro }}
+              </span>
+              <p class="mt-3 mb-0 state-header text-sm">
+                <span class="text-nowrap">{{
+                  "analytics.lastr" | translate
+                  }}</span>
+              </p>
+            </div>
+            <div class="col col-xl-6 col-lg-6">
+              <div echarts [options]="totalRevenueChart" [autoResize]="true" style="height: 80px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,314 @@
+<app-base-header headerText="{{'local.subsc' | translate}}" isTab="true" [tabContent]="tabContent"
+    (change)="tabChange($event)">
+</app-base-header>
+<app-loader *ngIf="isLoading == true"></app-loader>
+<div class="page-mt animate__animated animate__fadeInUp" [perfectScrollbar]="{ suppressScrollX: true }">
+    <ng-container *ngIf="activeTab == 0">
+        <div [hidden]="isLoading == true">
+            <div class="row mb-4">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-end">
+                    <button type="button" class="btn-dark-blue m-1 btn-lg ml-4" (click)="open(modalBasic)">
+                        {{'subscription.add' | translate}}
+                    </button>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table class="table card-table table-vcenter mb-0 subscriber-table">
+                                <thead>
+                                    <tr>
+                                        <th>{{'subscription.name' | translate}}</th>
+                                        <th>{{'subscription.detail' | translate}}</th>
+                                        <!--   <th>{{'subscription.spePrice' | translate}}</th> -->
+                                        <th>{{'subscription.onShoBooking' | translate}}</th>
+                                        <th>{{'subscription.onlineBooking' | translate}}</th>
+                                        <th class="text-center">{{'subscription.price' | translate}}</th>
+                                        <th>{{'subscription.spePrice' | translate}}</th>
+                                        <th class="text-center">{{'subscription.status' | translate}}</th>
+                                        <th class="text-center">{{'subscription.delete' | translate}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of subscriptionDetails">
+                                        <td (click)="open2(modalUpdate,item)">{{ item.name }}</td>
+                                        <td (click)="open2(modalUpdate,item)">{{ item.detail }}</td>
+                                        <td (click)="open2(modalUpdate,item)" class="text-right">{{ item.on_shop_booking
+                                            }}</td>
+                                        <td (click)="open2(modalUpdate,item)" class="text-right">{{ item.online_booking
+                                            }}</td>
+                                        <td (click)="open2(modalUpdate,item)" class="text-right">{{currency_symbol}}{{
+                                            item.price }}</td>
+                                        <td (click)="open2(modalUpdate,item)" class="text-right">{{currency_symbol}}{{
+                                            item.special_price }}</td>
+                                        <td (click)="open2(modalUpdate,item)"
+                                            class="status-active text-uppercase text-center" *ngIf="item?.status == 1">
+                                            Active
+                                        </td>
+                                        <td (click)="open2(modalUpdate,item)"
+                                            class="status-active text-uppercase text-center" *ngIf="item?.status == 0">
+                                            Deactive
+                                        </td>
+                                        <ng-template #tipContent>{{'subscription.deletePlan' | translate}}</ng-template>
+                                        <td class="text-uppercase text-center de" [ngbTooltip]="tipContent"
+                                            (click)="open3(modalDelete,item)">
+                                            <i class="fas fa-trash"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div *ngIf="subscriptionDetails?.length == 0" class="text-center p-3">
+                            <img src="./assets/images/NoData.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="activeTab == 1">
+        <div class="row mt-2">
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table card-table table-vcenter text-nowrap mb-0 subscriber-table">
+                            <thead>
+                                <tr>
+                                    <th>{{'subscription.name' | translate}}</th>
+                                    <th class="text-center">{{'subscription.detail' | translate}}</th>
+                                    <th class="text-right">{{'subscription.onShoBooking' | translate}}</th>
+                                    <th class="text-right">{{'subscription.onlineBooking' | translate}}</th>
+                                    <th class="text-center">{{'subscription.status' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of activeSubscription">
+                                    <td>{{item?.owner?.name}}</td>
+                                    <td class="text-center">{{item?.expiry | date}}</td>
+                                    <td class="text-right">{{currency_symbol}}{{item?.on_shop_booking}}</td>
+                                    <td class="text-right">{{currency_symbol}}{{item?.online_booking}}</td>
+                                    <td class="status-active text-center">{{'subscription.active' | translate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div *ngIf="activeSubscription?.length == 0" class="text-center p-3">
+                        <img src="./assets/images/NoData.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="activeTab == 2">
+        <div class="row mt-2">
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table card-table table-vcenter text-nowrap mb-0 subscriber-table">
+                            <thead>
+                                <tr>
+                                    <th>{{'subscription.name' | translate}}</th>
+                                    <th>{{'subscription.time' | translate}}</th>
+                                    <th class="text-center">{{'subscription.onShoBooking' | translate}}</th>
+                                    <th class="text-center">{{'subscription.onlineBooking' | translate}}</th>
+                                    <th class="text-center">{{'subscription.totalDays' | translate}}</th>
+                                    <th class="text-center">{{'subscription.paymentMethod' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of buyer_subscription">
+                                    <td>{{item?.owner?.name}}</td>
+                                    <td>{{item?.created_at | date}}</td>
+                                    <td class="text-right">{{currency_symbol}}{{item?.on_shop_booking}}</td>
+                                    <td class="text-right">{{currency_symbol}}{{item?.online_booking}}</td>
+                                    <td class="status-active text-center">{{item?.ava_day}}</td>
+                                    <td class="status-active text-center">{{item?.payment_method}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div *ngIf="buyer_subscription?.length == 0" class="text-center p-3">
+                        <img src="./assets/images/NoData.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
+<ng-template #modalBasic let-modal>
+    <div class="modal-header">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+            <h4 class="modal-title">
+                {{'subscription.add' | translate}}
+                <span class="float-right">
+                    <i class="fas fa-times" (click)="modal.dismiss('Cross click')"></i>
+                </span>
+            </h4>
+        </div>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="row mb-3">
+            <div class="col-sm-6 col-md-6 form-group mb-3">
+                <label class="text-label">{{'subscription.planTitle' | translate}}</label>
+                <input type="text" [(ngModel)]="data.name" placeholder="" class="form-control form-control-lg" />
+            </div>
+            <div class="col-sm-6 col-md-6 form-group mb-3">
+                <label class="text-label">{{'subscription.ttlDay' | translate}}</label>
+                <input type="number" placeholder="" [(ngModel)]="data.ava_day" class="form-control form-control-lg" />
+            </div>
+        </div>
+
+
+        <div class="row mb-3">
+            <div class="col-sm-6 col-md-6 form-group mb-3">
+                <label class="text-label">{{'subscription.onShoBook' | translate}}</label>
+                <input type="number" placeholder="" [(ngModel)]="data.on_shop_booking"
+                    class="form-control form-control-lg" />
+            </div>
+            <div class="col-sm-6 col-md-6 form-group mb-3">
+                <label class="text-label">{{'subscription.onlineShop' | translate}}</label>
+                <input type="number" placeholder="" [(ngModel)]="data.online_booking"
+                    class="form-control form-control-lg" />
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+                <label class="text-label">{{'subscription.spe' | translate}}</label>
+                <input type="number" placeholder="" [(ngModel)]="data.special_price"
+                    class="form-control form-control-lg" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+                <label class="text-label">{{'subscription.detail' | translate}}</label>
+                <input type="text" placeholder="" [(ngModel)]="data.detail" class="form-control form-control-lg" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+                <label class="text-label">{{'subscription.addPri' | translate}}</label>
+                <input type="number" placeholder="" [(ngModel)]="data.price" class="form-control form-control-lg" />
+            </div>
+
+
+            <div class="col-12 mb-3">
+                <label class="switch switch-info mr-3">
+                    <span>{{'subscription.active' | translate}}</span>
+                    <input checked="" type="checkbox" [(ngModel)]="data.status" />
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-white btn-lg" (click)="modal.dismiss('Cross click')">
+            {{"subscription.can" | translate}}
+        </button>
+        <button type="button"
+            [disabled]="data.name == null || data.ava_day == null || data.on_shop_booking == null || data.special_price == null || data.price == null || data.status == null"
+            class="btn btn-dark-blue m-1 btn-lg ml-4" (click)="modal.close('Save click')">
+            {{'subscription.save' | translate}}
+        </button>
+    </div>
+</ng-template>
+<ng-template #modalUpdate let-modal>
+    <div class="modal-header">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+            <h4 class="modal-title">
+                {{'subscription.updateThePlan' | translate}}
+                <span class="float-right">
+                    <i class="fas fa-times" (click)="modal.dismiss('Cross click')"></i>
+                </span>
+            </h4>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-sm-6 col-md-6 form-group mb-3">
+                <label class="text-label">{{'subscription.planTitle' | translate}}</label>
+                <input type="text" [(ngModel)]="data2.name" placeholder="" class="form-control form-control-lg" />
+            </div>
+            <div class="col-sm-6 col-md-6 form-group mb-3">
+                <label class="text-label">{{'subscription.ttlDay' | translate}}</label>
+                <input type="number" placeholder="" [(ngModel)]="data2.ava_day" class="form-control form-control-lg" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-6 col-md-6 form-group mb-3">
+                <label class="text-label">{{'subscription.onShopBook' | translate}}</label>
+                <input type="number" placeholder="" [(ngModel)]="data2.on_shop_booking"
+                    class="form-control form-control-lg" />
+            </div>
+            <div class="col-sm-6 col-md-6 form-group mb-3">
+                <label class="text-label">{{'subscription.onlineShop' | translate}}</label>
+                <input type="number" placeholder="" [(ngModel)]="data2.online_booking"
+                    class="form-control form-control-lg" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+                <label class="text-label">{{'subscription.spe' | translate}}</label>
+                <input type="number" placeholder="" [(ngModel)]="data2.special_price"
+                    class="form-control form-control-lg" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+                <label class="text-label">{{'subscription.detail' | translate}}</label>
+                <input type="text" placeholder="" [(ngModel)]="data2.detail" class="form-control form-control-lg" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+                <label class="text-label">{{'subscription.addPri' | translate}}</label>
+                <input type="number" placeholder="" [(ngModel)]="data2.price" class="form-control form-control-lg" />
+            </div>
+            <div class="col-12 mb-3">
+                <label class="switch switch-info mr-3">
+                    <span>{{'subscription.ac' | translate}}</span>
+                    <input checked="" type="checkbox" [(ngModel)]="data2.status" />
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-white btn-lg" (click)="modal.dismiss('Cross click')">
+            {{'subscription.can' | translate}}
+        </button>
+        <button type="button"
+            [disabled]="data2.name == null || data2.ava_day == null || data2.on_shop_booking == null || data2.special_price == null || data2.price == null || data2.status == null"
+            class="btn btn-dark-blue m-1 btn-lg ml-4" (click)="modal.close('Save click')">
+            {{'subscription.saveUpdate' | translate}}
+        </button>
+    </div>
+</ng-template>
+<ng-template #modalDelete let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-title">Plan Deletion</h6>
+        <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p><strong>{{'subscription.areSure' | translate}} <span class="text-primary">"{{deleteItem?.name}}"</span>
+                {{'subscription.plan' | translate}}</strong>
+        </p>
+        <p>{{'subscription.areSure' | translate}}
+            <span class="text-danger">{{'subscription.undone' | translate}}</span>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary"
+            (click)="modal.dismiss('cancel click')">{{'subscription.can' | translate}}</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">{{'subscription.ye' |
+            translate}}</button>
+    </div>
+</ng-template>

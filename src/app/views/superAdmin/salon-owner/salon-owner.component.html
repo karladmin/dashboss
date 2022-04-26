@@ -1,0 +1,271 @@
+<app-base-header headerText="{{ 'local.sOwner' | translate }}" isTab="false">
+</app-base-header>
+<app-loader *ngIf="isLoading == true"></app-loader>
+<div class="page-mt animate__animated animate__fadeInUp" [perfectScrollbar]="{ suppressScrollX: true }">
+  <ng-container>
+    <div class="row mb-4">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-end">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-white btn-lg" id="exportoption" ngbDropdownToggle>
+            {{ "salonOwner.ex" | translate }}
+          </button>
+          <div ngbDropdownMenu aria-labelledby="exportoption" class="dropdown-item-own">
+            <button ngbDropdownItem (click)="exportEXCEL()">
+              {{ "salonOwner.excel" | translate }}
+            </button>
+            <button ngbDropdownItem (click)="exportCSV()">
+              {{ "salonOwner.csv" | translate }}
+            </button>
+            <button ngbDropdownItem (click)="exportPDF()">
+              {{ "salonOwner.pdf" | translate }}
+            </button>
+          </div>
+        </div>
+        <button type="button" class="btn-dark-blue m-1 btn-lg ml-4" (click)="open(modalBasic)">
+          {{ "salonOwner.add" | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-md-12 col-lg-12">
+        <div class="card">
+          <div class="table-responsive">
+            <table class="
+                table
+                card-table
+                table-vcenter
+                text-nowrap
+                mb-0
+                subscriber-table
+              ">
+              <thead>
+                <tr>
+                  <th>{{ "salonOwner.name" | translate }}</th>
+                  <th>{{ "salonOwner.detail" | translate }}</th>
+                  <th class="text-center">
+                    {{ "salonOwner.time" | translate }}
+                  </th>
+                  <th class="text-center">
+                    {{ "salonOwner.sta" | translate }}
+                  </th>
+                  <th>{{ "salonOwner.action" | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of pageOfData">
+                  <td [routerLink]="'/super-admin/owner/' + item.id">
+                    {{ item.name }}
+                  </td>
+                  <td [routerLink]="'/super-admin/owner/' + item.id">
+                    {{ item.email }}
+                  </td>
+                  <td class="text-center" [routerLink]="'/super-admin/owner/' + item.id">
+                    {{ item.updated_at | date }}
+                  </td>
+                  <td class="status-active text-uppercase text-center">
+                    <span *ngIf="item?.status == 0" style="color: red">
+                      {{ "salonOwner.block" | translate }}
+                    </span>
+                    <span *ngIf="item?.status == 3" style="color: red">
+                      {{ "salonOwner.expire" | translate }}
+                    </span>
+                    <span *ngIf="item?.status == 1">
+                      {{ "salonOwner.active" | translate }}
+                    </span>
+                    <span *ngIf="item?.status == 2" style="color: black;cursor: pointer;" (click)="statusUpdate(item)">
+                      {{ "salonOwner.unverify" | translate }}
+                    </span>
+                  </td>
+                  <td>
+                    <a class="mr-3" (click)="open(modalBasic, item)">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="text-danger mr-3" (click)="open3(modalDelete, item)">
+                      <i class="fas fa-trash"></i>
+                    </a>
+                    <a class="text-success" (click)="statusUpdate(item)" ngbTooltip="Owner Block/Unblock">
+                      <i class="fas fa-user-alt" *ngIf="item.status == 0"></i>
+                      <i class="fas fa-user-slash" *ngIf="item.status == 1"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <table-paginate [items]="data" (changePage)="onChangePage($event)" [pageSize]="7"></table-paginate>
+
+          <div class="table-responsive" [hidden]="true" id="owners" #owners>
+            <table class="
+                table
+                card-table
+                table-vcenter
+                text-nowrap
+                mb-0
+                subscriber-table
+              ">
+              <thead>
+                <tr>
+                  <th>{{ "salonOwner.name" | translate }}</th>
+                  <th>{{ "salonOwner.detail" | translate }}</th>
+                  <th class="text-center">
+                    {{ "salonOwner.time" | translate }}
+                  </th>
+                  <th class="text-center">
+                    {{ "salonOwner.sta" | translate }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of data">
+                  <td>
+                    {{ item.name }}
+                  </td>
+                  <td>
+                    {{ item.email }}
+                  </td>
+                  <td class="text-center">
+                    {{ item.updated_at | date }}
+                  </td>
+                  <td class="status-active text-uppercase text-center">
+                    <span *ngIf="item?.status == 0" style="color: red">
+                      {{ "salonOwner.block" | translate }}
+                    </span>
+                    <span *ngIf="item?.status == 3" style="color: red">
+                      {{ "salonOwner.expire" | translate }}
+                    </span>
+                    <span *ngIf="item?.status == 1">
+                      {{ "salonOwner.active" | translate }}
+                    </span>
+                    <span *ngIf="item?.status == 2" style="color: black">
+                      {{ "salonOwner.unverify" | translate }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #modalBasic let-modal>
+  <div>
+    <div class="modal-header">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+        <h4 class="modal-title">
+          {{
+          isEdit
+          ? ("salonOwner.editOwner" | translate)
+          : ("salonOwner.addOwner" | translate)
+          }}
+          <span class="float-right">
+            <i class="fas fa-times" (click)="modal.dismiss('Cross click')"></i>
+          </span>
+        </h4>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="row mb-2">
+        <div class="col-sm-12 col-md-6 form-group">
+          <label class="text-label">{{ "salonOwner.name" | translate }}</label>
+          <input type="text" placeholder="" class="form-control form-control-lg" [(ngModel)]="ownerDataInput.name" />
+          <p class="input-error-msg-left" *ngIf="errorData && errorData.name">
+            {{ errorData.name[0] }}
+          </p>
+        </div>
+        <div class="col-sm-12 col-md-6 form-group" *ngIf="!isEdit">
+          <label class="text-label">
+            {{ "salonOwner.companyName" | translate }}
+          </label>
+          <input type="text" placeholder="" class="form-control form-control-lg"
+            [(ngModel)]="ownerDataInput.company_name" />
+          <p class="input-error-msg-left" *ngIf="errorData && errorData.company_name">
+            {{ errorData.company_name[0] }}
+          </p>
+        </div>
+        <div class="col-sm-12 col-md-6 form-group" *ngIf="isEdit">
+          <label class="text-label">
+            {{ "salonOwner.phoneNum" | translate }}
+          </label>
+          <input type="text" placeholder="" class="form-control form-control-lg" [(ngModel)]="ownerDataInput.phone" />
+          <p class="input-error-msg-left" *ngIf="errorData && errorData.phone">
+            {{ errorData.phone[0] }}
+          </p>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-sm-12 col-md-12 form-group">
+          <label class="text-label">{{ "salonOwner.email" | translate }}</label>
+          <input type="text" placeholder="" [readonly]="isEdit ? true : false" class="form-control form-control-lg"
+            [(ngModel)]="ownerDataInput.email" />
+          <p class="input-error-msg-left" *ngIf="errorData && errorData.email">
+            {{ errorData.email[0] }}
+          </p>
+        </div>
+      </div>
+      <div class="row mb-2" *ngIf="!isEdit">
+        <div class="col-sm-12 col-md-6 form-group">
+          <label class="text-label">
+            {{ "salonOwner.password" | translate }}
+          </label>
+          <input type="password" placeholder="" class="form-control form-control-lg"
+            [(ngModel)]="ownerDataInput.password" />
+          <p class="input-error-msg-left" *ngIf="errorData && errorData.password">
+            {{ errorData.password[0] }}
+          </p>
+        </div>
+        <div class="col-sm-12 col-md-6 form-group">
+          <label class="text-label">
+            {{ "salonOwner.confirmPassword" | translate }}
+          </label>
+          <input type="password" placeholder="" class="form-control form-control-lg"
+            [(ngModel)]="ownerDataInput.password_confirmation" />
+          <p class="input-error-msg-left" *ngIf="errorData && errorData.password_confirmation">
+            {{ errorData.password_confirmation[0] }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-white btn-lg" (click)="modal.dismiss('Cross click')">
+        {{ "staffCompo.can" | translate }}
+      </button>
+      <btn-loading btnClass="btn btn-primary m-1 btn-lg btn-block" [loading]="loading" (click)="addOwner()">
+        {{
+        isEdit
+        ? ("staffCompo.save" | translate)
+        : ("salonOwner.addText" | translate)
+        }}
+      </btn-loading>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalDelete let-modal>
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-title">
+      {{ "salonOwner.deleteTitle" | translate }}
+    </h6>
+    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      {{ "salonOwner.deleteConfirmText" | translate }}
+      <strong>{{ "salonOwner.owner" | translate }}?</strong>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">
+      {{ "image.can" | translate }}
+    </button>
+    <btn-loading btnClass="btn btn btn-danger" [loading]="loading" (click)="deleteOwner()">
+      {{ "image.ye" | translate }}
+    </btn-loading>
+  </div>
+</ng-template>

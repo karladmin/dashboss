@@ -1,0 +1,316 @@
+<app-base-header headerText="{{ 'local.bType' | translate }}">
+</app-base-header>
+<app-loader *ngIf="isLoading == true"></app-loader>
+<div
+  class="page-mt animate__animated animate__fadeInUp"
+  [perfectScrollbar]="{ suppressScrollX: true }"
+>
+  <ng-container>
+    <div [hidden]="isLoading == true">
+      <div class="row mb-4">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-end">
+          <button
+            type="button"
+            class="btn-dark-blue m-1 btn-lg ml-4"
+            (click)="open(modalBasic)"
+          >
+            {{ "businessType.addNew" | translate }}
+          </button>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-12 col-lg-12">
+          <div class="card">
+            <div class="table-responsive">
+              <table
+                class="
+                  table
+                  card-table
+                  table-vcenter
+                  text-nowrap
+                  mb-0
+                  subscriber-table
+                "
+              >
+                <thead>
+                  <tr>
+                    <th class="text-center">
+                      {{ "businessType.name" | translate }}
+                    </th>
+                    <th class="text-center">
+                      {{ "businessType.colorOne" | translate }}
+                    </th>
+                    <th class="text-center">
+                      {{ "businessType.colorTwo" | translate }}
+                    </th>
+                    <th class="text-center">
+                      {{ "businessType.status" | translate }}
+                    </th>
+                    <th class="text-center">
+                      {{ "businessType.del" | translate }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of pageOfBusinessType">
+                    <td (click)="open2(modalUpdate, item)" class="text-center">
+                      {{ item?.name }}
+                    </td>
+                    <td (click)="open2(modalUpdate, item)" class="text-center">
+                      {{ item?.color_one }}
+                    </td>
+                    <td (click)="open2(modalUpdate, item)" class="text-center">
+                      {{ item?.color_two }}
+                    </td>
+                    <td
+                      (click)="open2(modalUpdate, item)"
+                      class="status-active text-uppercase text-center"
+                      *ngIf="item?.status == 1"
+                    >
+                      Active
+                    </td>
+                    <td
+                      (click)="open2(modalUpdate, item)"
+                      class="status-active text-uppercase text-center"
+                      *ngIf="item?.status == 0"
+                    >
+                      Deactive
+                    </td>
+                    <ng-template #tipContent>{{
+                      "businessType.delbusinessType" | translate
+                    }}</ng-template>
+                    <td
+                      class="text-uppercase text-center de"
+                      [ngbTooltip]="tipContent"
+                      (click)="open3(modalDelete, item)"
+                    >
+                      <i class="fas fa-trash"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <table-paginate
+              [items]="subscriptionDetails"
+              (changePage)="onChangePage($event)"
+              [pageSize]="7"
+            ></table-paginate>
+            <!-- table-responsive -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #modalBasic let-modal>
+  <div class="modal-header">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+      <h4 class="modal-title">
+        {{ "businessType.addBusinessType" | translate }}
+        <span class="float-right">
+          <i class="fas fa-times" (click)="modal.dismiss('Cross click')"></i>
+        </span>
+      </h4>
+    </div>
+  </div>
+
+  <div class="modal-body">
+    <div class="row mb-3">
+      <div class="col-sm-12 col-md-12 form-group mb-3">
+        <label class="text-label">{{
+          "businessType.businessTypeName" | translate
+        }}</label>
+        <input
+          type="text"
+          [(ngModel)]="data.name"
+          placeholder=""
+          class="form-control form-control-lg"
+        />
+      </div>
+      <p></p>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-12 col-md-12 form-group mb-3">
+        <label class="text-label">{{
+          "businessType.colorOne" | translate
+        }}</label>
+        <input
+          type="color"
+          placeholder=""
+          [(ngModel)]="data.color_one"
+          class="form-control form-control-lg"
+        />
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-sm-12 col-md-12 form-group mb-3">
+        <label class="text-label">{{
+          "businessType.colorTwo" | translate
+        }}</label>
+        <input
+          type="color"
+          placeholder=""
+          [(ngModel)]="data.color_two"
+          class="form-control form-control-lg"
+        />
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-12 mb-3">
+        <label class="switch switch-info mr-3">
+          <span>{{ "businessType.active" | translate }}</span>
+          <input checked="" type="checkbox" [(ngModel)]="data.status" />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white btn-lg" (click)="modal.dismiss('Cross click')">
+      {{ "businessType.can" | translate }}
+    </button>
+    <button
+      type="button"
+      [disabled]="
+        data.name == null ||
+        data.color_one == null ||
+        data.color_two == null ||
+        data.status == null
+      "
+      class="btn btn-dark-blue m-1 btn-lg ml-4"
+      (click)="modal.close('Save click')"
+    >
+      {{ "businessType.save" | translate }}
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #modalUpdate let-modal>
+  <div class="modal-header">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+      <h4 class="modal-title">
+        {{ "businessType.updateThePlan" | translate }}
+        <span class="float-right">
+          <i class="fas fa-times" (click)="modal.dismiss('Cross click')"></i>
+        </span>
+      </h4>
+    </div>
+  </div>
+
+  <div class="modal-body">
+    <div class="row mb-3">
+      <div class="col-sm-12 col-md-12 form-group mb-3">
+        <label class="text-label">{{
+          "businessType.buTName" | translate
+        }}</label>
+        <input
+          type="text"
+          [(ngModel)]="data2.name"
+          placeholder=""
+          class="form-control form-control-lg"
+        />
+      </div>
+      <p></p>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-12 col-md-12 form-group mb-3">
+        <label class="text-label">{{
+          "businessType.colorOne" | translate
+        }}</label>
+        <input
+          type="color"
+          placeholder=""
+          [(ngModel)]="data2.color_one"
+          class="form-control form-control-lg"
+        />
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-sm-12 col-md-12 form-group mb-3">
+        <label class="text-label">{{
+          "businessType.colorTwo" | translate
+        }}</label>
+        <input
+          type="color"
+          placeholder=""
+          [(ngModel)]="data2.color_two"
+          class="form-control form-control-lg"
+        />
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-12 mb-3">
+        <label class="switch switch-info mr-3">
+          <span>{{ "businessType.active" | translate }}</span>
+          <input checked="" type="checkbox" [(ngModel)]="data2.status" />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white btn-lg" (click)="modal.dismiss('Cross click')">
+      {{ "businessType.can" | translate }}
+    </button>
+    <button
+      type="button"
+      [disabled]="
+        data2.name == '' || data2.color_one == null || data2.color_two == null
+      "
+      class="btn btn-dark-blue m-1 btn-lg ml-4"
+      (click)="modal.close('Save click')"
+    >
+      {{ "businessType.save" | translate }}
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #modalDelete let-modal>
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-title">
+      {{ "businessType.buTypeDeleteion" | translate }}
+    </h6>
+    <button
+      type="button"
+      class="close"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      <strong
+        >{{ "businessType.areSureDelete" | translate }}
+        <span class="text-primary">"{{ deleteItem?.name }}"</span>
+        {{ "businessType.typeQues" | translate }}</strong
+      >
+    </p>
+    <p>
+      {{ "businessType.allInfo" | translate }}
+      <span class="text-danger">{{ "businessType.thisOpe" | translate }}</span>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="modal.dismiss('cancel click')"
+    >
+      {{ "businessType.can" | translate }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="modal.close('Ok click')"
+    >
+      {{ "businessType.ye" | translate }}
+    </button>
+  </div>
+</ng-template>

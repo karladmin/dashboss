@@ -1,0 +1,40 @@
+.l{
+    margin-right: 0;
+    margin-left: 14px;
+    
+    padding-right: 0;
+    input{
+        height: 46px;
+    }
+}
+.r{
+    padding-left: 0;
+    margin-left: 0;
+    input{
+        height: 46px;
+    }
+}
+.m{
+    margin-top: 2rem !important;
+}
+.oy-auto {
+    overflow-y: auto;
+  }
+  .header-tab {
+    div {
+      font-size: 14px;
+      color: #67768c;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+  }.card-title {
+    color: #343941 !important;
+  }
+  
+  .active-tab {
+    border-bottom: 3px solid;
+    padding-bottom: 4px;
+  }
+  h2{
+    margin: 0;
+  }

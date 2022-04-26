@@ -1,0 +1,35 @@
+<app-base-header
+  headerText="{{ 'feedbackPage.label' | translate }}"
+></app-base-header>
+<div
+  class="page-mt animate__animated animate__fadeInUp"
+  [perfectScrollbar]="{ suppressScrollX: true }"
+>
+  <div class="row" *ngFor="let item of data" class="mb-4 mr-4 mt-4">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="card mb-4">
+        <div class="card-body p-4">
+          <p class="mb-1">{{ item?.email }}</p>
+          <p>{{ item?.msg }}</p>
+          <div class="imageDiv">
+            <img
+              *ngIf="item?.image_one"
+              src="{{ item?.imageUri + item?.image_one }}"
+              alt=""
+            />
+            <img
+              *ngIf="item?.image_two"
+              src="{{ item?.imageUri + item?.image_two }}"
+              alt=""
+            />
+            <img
+              *ngIf="item?.image_three"
+              src="{{ item?.imageUri + item?.image_three }}"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

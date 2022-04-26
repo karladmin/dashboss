@@ -1,0 +1,87 @@
+<app-base-header headerText="Reports"></app-base-header>
+<div
+  class="page-mt animate__animated animate__fadeInUp"
+  [perfectScrollbar]="{ suppressScrollX: true }"
+>
+  <div class="section-body">
+    <div class="row mb-4">
+      <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6">
+        <div class="card card-large-icons">
+          <div class="card-icon bg-info text-white">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="card-body">
+            <h4>{{ "report.subBuy" | translate }}</h4>
+            <p>{{ "report.Sublorem" | translate }}</p>
+            <a routerLink="/super-admin/subscrip-report"
+              >{{ "report.viewR" | translate }}
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6">
+        <div class="card card-large-icons">
+          <div class="card-icon bg-info text-white">
+            <i class="fas fa-clipboard-check"></i>
+          </div>
+          <div class="card-body">
+            <h4>{{ "report.owner" | translate }}</h4>
+            <p>{{ "report.ownerLorem" | translate }}</p>
+            <a routerLink="/super-admin/owner-product-report"
+              >{{ "report.viewR" | translate }}
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6">
+        <div class="card card-large-icons">
+          <div class="card-icon bg-info text-white">
+            <i class="far fa-calendar-check"></i>
+          </div>
+          <div class="card-body">
+            <h4>{{ "report.user" | translate }}</h4>
+            <p>{{ "report.loremUser" | translate }}</p>
+            <a routerLink="/super-admin/user-product-report"
+              >{{ "report.viewR" | translate }}
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6">
+        <div class="card card-large-icons">
+          <div class="card-icon bg-info text-white">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="card-body">
+            <h4>{{ "report.userReistration" | translate }}</h4>
+            <p>{{ "report.userLorem" | translate }}</p>
+            <a
+              routerLink="/super-admin/user-report"
+              href="https://saasmonks.in/App-Demo/petgo-10521/public/admin/report/sponsored"
+              >{{ "report.viewR" | translate }}
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6">
+        <div class="card card-large-icons">
+          <div class="card-icon bg-info text-white">
+            <i class="fas fa-user-circle"></i>
+          </div>
+          <div class="card-body">
+            <h4>{{ "report.ownerReg" | translate }}</h4>
+            <p>{{ "report.ownerLorems" | translate }}</p>
+            <a routerLink="/super-admin/owner-report"
+              >{{ "report.viewR" | translate }}
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

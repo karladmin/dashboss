@@ -1,0 +1,33 @@
+.plantype-table,
+.subscriber-table {
+  tbody,
+  thead {
+    tr {
+      td,
+      th {
+        border-right: 1px dashed #dee2e6;
+
+        &:last-child {
+          border-right: 0px;
+        }
+      }
+    }
+  }
+}
+.subscriber-table {
+  thead {
+    tr {
+      th {
+        border-right: 0px;
+      }
+    }
+  }
+  .status-active {
+    color: #11cfbd !important;
+  }
+}
+.de{cursor: pointer;
+  i{
+    color: red;
+  }
+}

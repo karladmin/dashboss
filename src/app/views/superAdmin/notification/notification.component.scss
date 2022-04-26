@@ -1,0 +1,34 @@
+.margin-top {
+  margin-top: 20px;
+}
+.btn {
+  margin-left: 22px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.tags-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+.tags {
+  display: inline-flex;
+  overflow-wrap: anywhere;
+  h5 {
+    margin-right: 12px;
+    background: aliceblue;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 6px;
+    margin-bottom: 16px;
+  }
+}
+
+textarea {
+  font-size: 18px;
+}
+.pad {
+  border: 1px solid #eeeeee;
+  padding: 19px;
+  border-radius: 8px;
+  margin-top: 13px;
+}

@@ -1,0 +1,248 @@
+<app-base-header headerText="{{ 'local.appUser' | translate }}"></app-base-header>
+
+<div class="page-mt animate__animated animate__fadeInUp" [perfectScrollbar]="{ suppressScrollX: true }">
+  <div class="row mb-4">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-6">
+      <div class="input-group search_bar col-md-7 col-sm-12 p-0">
+        <input class="form-control py-2 border-0" type="search" placeholder="{{ 'appUsers.place' | translate }}"
+          style="height: 45px; background: transparent" (input)="searchUser($event.target.value)" />
+        <span class="input-group-append">
+          <button class="btn btn-outline-secondary border-0" type="button" style="height: 45px">
+            <i class="fa fa-search"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-6 text-end">
+      <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-white btn-lg" id="dropdownBasic1" ngbDropdownToggle>
+          {{ "appUsers.options" | translate }}
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-item-own">
+          <button ngbDropdownItem (click)="exportEXCEL()">
+            {{ "appUsers.ex" | translate }}
+          </button>
+          <button ngbDropdownItem (click)="exportCSV()">
+            {{ "appUsers.csv" | translate }}
+          </button>
+          <button ngbDropdownItem (click)="exportPDF()">
+            {{ "appUsers.pdf" | translate }}
+          </button>
+        </div>
+      </div>
+      <button type="button" class="btn-dark-blue m-1 btn-lg ml-4" (click)="open(modalBasic)">
+        {{ "appUsers.addnew" | translate }}
+      </button>
+    </div>
+  </div>
+  <app-loader *ngIf="isLoading == true"></app-loader>
+  <div class="row" *ngIf="isLoading == false">
+    <div class="col-md-12 col-lg-12">
+      <div class="card">
+        <div class="table-responsive">
+          <table class="
+              table
+              card-table
+              table-vcenter
+              text-nowrap
+              appuser-table
+              mb-0
+            ">
+            <thead>
+              <tr>
+                <th></th>
+                <th>{{ "appUsers.name" | translate }}</th>
+                <th>{{ "appUsers.email" | translate }}</th>
+                <th>{{ "appUsers.mobile" | translate }}</th>
+                <th>{{ "appUsers.status" | translate }}</th>
+                <th>{{ "appUsers.created" | translate }}</th>
+                <th>{{ "appUsers.action" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of pageOfAppUser">
+                <td class="text-start">
+                  <img class="img-dt" [src]="
+                      item?.imageUri
+                        ? item?.imageUri
+                        : 'https://via.placeholder.com/150'
+                    " alt="" srcset="" />
+                </td>
+                <td>{{ item?.name }}</td>
+                <td>{{ item?.email }}</td>
+                <td>{{ item?.phone }}</td>
+                <td>
+                  <div [class]="
+                      item.status == 1 ? 'status-active' : 'status-block'
+                    ">
+                    {{ item.status == 1 ? "ACTIVE" : "BLOCK" }}
+                  </div>
+                </td>
+                <td>{{ item?.created_at | date }}</td>
+                <td>
+                  <a class="mr-3" (click)="open(modalBasic, item)">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a class="text-danger mr-3" (click)="open3(modalDelete, item)">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                  <a class="text-success" (click)="blockUser(item)" ngbTooltip="User Block/Unblock">
+                    <i class="fas fa-user-alt" *ngIf="item.status == 0"></i>
+                    <i class="fas fa-user-slash" *ngIf="item.status == 1"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-center p-3" *ngIf="appUser?.length == 0">
+            <img class="img" src="./assets/images/NoData.png" alt="" />
+          </div>
+        </div>
+        <table-paginate [items]="appUser" (changePage)="onChangePage($event)" [pageSize]="7"></table-paginate>
+
+        <div class="table-responsive" [hidden]="true" id="users" #users>
+          <table class="
+              table
+              card-table
+              table-vcenter
+              text-nowrap
+              appuser-table
+              mb-0
+            ">
+            <thead>
+              <tr>
+                <th>{{ "appUsers.name" | translate }}</th>
+                <th>{{ "appUsers.email" | translate }}</th>
+                <th>{{ "appUsers.mobile" | translate }}</th>
+                <th>{{ "appUsers.status" | translate }}</th>
+                <th>{{ "appUsers.created" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of appUser">
+                <td>{{ item?.name }}</td>
+                <td>{{ item?.email }}</td>
+                <td>{{ item?.phone }}</td>
+                <td>
+                  <div [class]="
+                      item.status == 1 ? 'status-active' : 'status-block'
+                    ">
+                    {{ item.status == 1 ? "ACTIVE" : "BLOCK" }}
+                  </div>
+                </td>
+                <td>{{ item?.created_at | date }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalBasic let-modal>
+  <div>
+    <div class="modal-header">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+        <h4 class="modal-title">
+          {{
+          isEdit
+          ? ("appUsers.editAppUser" | translate)
+          : ("appUsers.addAppUser" | translate)
+          }}
+          <span class="float-right">
+            <i class="fas fa-times" (click)="modal.dismiss('Cross click')"></i>
+          </span>
+        </h4>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="row mb-2">
+        <div class="col-sm-12 col-md-6 form-group">
+          <label class="text-label">{{ "appUsers.name" | translate }}</label>
+          <input type="text" placeholder="" class="form-control form-control-lg" [(ngModel)]="userDataInput.name" />
+          <p class="input-error-msg-left" *ngIf="errorData && errorData.name">
+            {{ errorData.name[0] }}
+          </p>
+        </div>
+        <div class="col-sm-12 col-md-6 form-group">
+          <label class="text-label">
+            {{ "appUsers.phoneNumber" | translate }}
+          </label>
+          <input type="text" placeholder="" class="form-control form-control-lg" [(ngModel)]="userDataInput.phone" />
+          <p class="input-error-msg-left" *ngIf="errorData && errorData.phone">
+            {{ errorData.phone[0] }}
+          </p>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-sm-12 col-md-12 form-group">
+          <label class="text-label">{{ "appUsers.email" | translate }}</label>
+          <input type="text" placeholder="" [readonly]="isEdit ? true : false" class="form-control form-control-lg"
+            [(ngModel)]="userDataInput.email" />
+          <p class="input-error-msg-left" *ngIf="errorData && errorData.email">
+            {{ errorData.email[0] }}
+          </p>
+        </div>
+      </div>
+      <div class="row mb-2" *ngIf="!isEdit">
+        <div class="col-sm-12 col-md-6 form-group">
+          <label class="text-label">
+            {{ "appUsers.password" | translate }}
+          </label>
+          <input type="password" placeholder="" class="form-control form-control-lg"
+            [(ngModel)]="userDataInput.password" />
+          <p class="input-error-msg-left" *ngIf="errorData && errorData.password">
+            {{ errorData.password[0] }}
+          </p>
+        </div>
+        <div class="col-sm-12 col-md-6 form-group">
+          <label class="text-label">
+            {{ "appUsers.confirmPassword" | translate }}
+          </label>
+          <input type="password" placeholder="" class="form-control form-control-lg"
+            [(ngModel)]="userDataInput.password_confirmation" />
+          <p class="input-error-msg-left" *ngIf="errorData && errorData.password_confirmation">
+            {{ errorData.password_confirmation[0] }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-white btn-lg" (click)="modal.dismiss('Cross click')">
+        {{ "staffCompo.can" | translate }}
+      </button>
+      <btn-loading btnClass="btn btn-primary m-1 btn-lg btn-block" [loading]="loading" (click)="addAppUser()">
+        {{
+        isEdit ? ("appUsers.save" | translate) : ("appUsers.add" | translate)
+        }}
+      </btn-loading>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalDelete let-modal>
+  <div class="modal-header">
+    <h6 class="modal-title" id="modal-title">
+      {{ "appUsers.deleteTitle" | translate }}
+    </h6>
+    <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      {{ "salonOwner.deleteConfirmText" | translate }}
+      <strong> {{ "appUsers.appUser" | translate }}?</strong>
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">
+      {{ "image.can" | translate }}
+    </button>
+    <btn-loading btnClass="btn btn btn-danger" [loading]="loading" (click)="deleteAppUser()">
+      {{ "image.ye" | translate }}
+    </btn-loading>
+  </div>
+</ng-template>

@@ -1,0 +1,348 @@
+<app-base-header headerText="Salon Owner"></app-base-header>
+<app-loader *ngIf="isLoading == true"></app-loader>
+<div class="page-mt animate__animated animate__fadeInUp" [perfectScrollbar]="{ suppressScrollX: true }">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+      <div class="card mb-4 o-hidden">
+        <div class="card-body bg-primary">
+          <div class="d-flex">
+            <div style="min-width: 90px">
+              <img src="../../../../assets/images/faces/16.jpg" style="box-shadow: none" alt="" srcset=""
+                class="img-dt" />
+            </div>
+            <div class="text-white">
+              <div class="card-title m-0 text-white">{{oData.name}}</div>
+              <p>{{oData.email}}</p>
+              <div class="d-flex justify-content-between">
+                <div class="mr-3">
+                  <p class="m-0">Total Revenue</p>
+                  <p class="m-0">{{currency_symbol}} {{oData?.appointments_revenue + oData?.product_revenue}}</p>
+                </div>
+                <div>
+                  <p class="m-0">Total Customer</p>
+                  <p class="m-0">{{oData?.tot_client}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="text-label m-0">Company Name</p>
+          <p class="text-primary text-16">{{oData?.company?.company_name}}</p>
+          <p class="text-label m-0">Description</p>
+          <p class="text-primary text-justify text-16">
+            {{oData?.company?.marketplace_info}}
+          </p>
+        </div>
+      </div>
+      <div class="card mb-4">
+        <div class="card-body p-0">
+          <div class="card-title text-20 border-bottom p-4 m-0">
+            Branch List
+          </div>
+          <div class="px-3">
+            <div class="border-bottom p-3 d-flex justify-content-between align-items-center"
+              *ngFor="let branch of oData?.branch">
+              <div>
+                <div class="card-title m-0">{{branch.name}}</div>
+                <p class="m-0 text-label">
+                  {{branch.address + ' ' + branch.city + ', ' + branch.state + ' ' + branch.zip_code}}
+                </p>
+              </div>
+              <div>
+                <label class="radio radio-outline-primary">
+                  <input [(ngModel)]="selectedBranch" [value]="branch.id" name="radio" type="radio"
+                    class="ng-valid ng-dirty ng-touched" (click)="changeBranch(branch)" />
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+      <div class="row mb-4">
+        <div class="col-xl-4 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col text-uppercase">
+                  <h6 class="text-uppercase state-header mb-0 text-success">
+                    Total
+                  </h6>
+                  <span class="h6 mb-0 state-number text-label">appointment</span>
+                </div>
+                <div class="col-auto">
+                  <div class="">
+                    <span class="h6 mb-0 state-number text-success">{{branchData?.state?.all_app}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col text-uppercase">
+                  <h6 class="text-uppercase state-header mb-0 text-info">
+                    complete
+                  </h6>
+                  <span class="h6 mb-0 state-number text-label">appointment</span>
+                </div>
+                <div class="col-auto">
+                  <div class="">
+                    <span class="h6 mb-0 state-number text-info">{{branchData?.state?.com_app}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col text-uppercase">
+                  <h6 class="text-uppercase state-header mb-0 text-danger">
+                    cancel
+                  </h6>
+                  <span class="h6 mb-0 state-number text-label">appointment</span>
+                </div>
+                <div class="col-auto">
+                  <div class="">
+                    <span class="h6 mb-0 state-number text-danger">{{branchData?.state?.can_app}}</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body upcomings">
+          <div class="card-title mb-0">Upcoming Appointment</div>
+          <div class="d-flex border-bottom-dotted-dim pt-3" *ngFor="let appo of branchData?.appointment">
+            <img *ngIf="appo?.master?.book_from == 0" class="avatar-md rounded mr-3"
+              [src]="appo?.master?.customer?.imageUri ? appo?.master?.customer?.imageUri : './assets/images/faces/2.jpg'"
+              alt="" />
+            <img *ngIf="appo?.master?.book_from == 1" class="avatar-md rounded mr-3"
+              [src]="appo?.master?.app_customer?.imageUri ? appo?.master?.app_customer?.imageUri : './assets/images/faces/2.jpg'"
+              alt="" />
+            <div class="flex-grow-1 pb-3" style="border-bottom: 1px dashed #aaa">
+              <h6 class="m-0 mb-1 text-info" *ngIf="appo?.master?.book_from == 0">
+                {{appo?.master?.customer?.first_name + ' ' + appo?.master?.customer?.last_name}} <span
+                  class="float-right text-info">{{appo?.start_time | date:'shortTime'}}</span>
+              </h6>
+              <h6 class="m-0 mb-1 text-info" *ngIf="appo?.master?.book_from == 1">
+                {{appo?.master?.app_customer?.name}} <span class="float-right text-info">{{appo?.start_time |
+                  date:'shortTime'}}</span>
+              </h6>
+              <h5 class="m-0 mb-1">{{appo?.service?.name}}</h5>
+              <p class="m-0 state-header text-sm">
+                Walk In, {{ appo?.duration | hhmm }} to {{appo?.staff?.name}}
+              </p>
+              <p class="m-0 state-header text-sm">
+                <span class="float-right text-info">{{currency_symbol}} {{appo?.total}}</span>
+              </p>
+            </div>
+          </div>
+          <div class="text-center" *ngIf="branchData?.appointment?.length == 0">
+            <app-no-data></app-no-data>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 my-4">
+      <div class="card mb-4">
+        <div class="table-responsive">
+          <table class="table card-table table-vcenter text-nowrap">
+            <thead>
+              <tr>
+                <th>Top Staff</th>
+                <th class="text-center">
+                  <div class="float-right">
+                    Total Appointment ({{branchData?.state?.staff_tot_app}}) <br />
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="text-center" *ngIf="branchData?.staff?.length == 0">
+                <th class="text-center">
+                  <app-no-data></app-no-data>
+                </th>
+              </tr>
+              <tr *ngFor="let staff of branchData?.staff">
+                <td>{{staff?.staff?.name}}</td>
+                <td class="text-end">{{staff.st}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 my-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="ul-widget__head __g-support v-margin">
+            <div class="ul-widget__head-label">
+              <div class="card-title m-0">Top Selling Products</div>
+            </div>
+          </div>
+          <div class="ul-widget__body">
+            <div class="ul-widget6">
+              <div class="ul-widget6__head">
+                <div class="ul-widget6__item">
+                  <span class="header-tbl text-primary"> Product Name </span>
+                  <span class="header-tbl text-primary text-center">
+                    Total Sells
+                  </span>
+                  <span class="header-tbl text-primary text-center">
+                    Last Month
+                  </span>
+                </div>
+              </div>
+              <div class="ul-widget6__body" *ngIf="branchData?.top_product?.length == 0">
+                <div class="ul-widget6__item text-center">
+                  <span></span>
+                  <app-no-data></app-no-data>
+                  <span></span>
+                </div>
+              </div>
+              <div class="ul-widget6__body" *ngFor="let item of branchData?.top_product">
+                <div class="ul-widget6__item">
+                  <span>{{item?.product?.name}}</span>
+                  <span class="text-center">{{item?.total}}</span>
+                  <span class="text-center">{{currency_symbol}}{{item?.lm}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <div class="ul-widget__head __g-support v-margin">
+            <div class="ul-widget__head-label">
+              <div class="card-title m-0">Top Services</div>
+            </div>
+          </div>
+          <div class="ul-widget__body">
+            <div class="ul-widget6">
+              <div class="ul-widget6__head">
+                <div class="ul-widget6__item">
+                  <span class="header-tbl text-primary">Service</span><span
+                    class="header-tbl text-primary text-center">This Month</span><span
+                    class="header-tbl text-primary text-center">Last Month</span>
+                </div>
+              </div>
+              <div class="ul-widget6__body" *ngIf="branchData?.top_service?.length == 0">
+                <div class="ul-widget6__item">
+                  <span></span>
+                  <app-no-data></app-no-data>
+                  <span></span>
+                </div>
+              </div>
+              <div class="ul-widget6__body">
+                <div class="ul-widget6__item" *ngFor="let item of branchData?.top_service">
+                  <span>{{item?.service?.name}}</span>
+                  <span class="text-center">{{item?.cm}}</span>
+                  <span class="text-center">{{item?.lm}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-body p-0">
+          <div class="card-title text-20 border-bottom p-4">Service list</div>
+          <div class="row px-3 mb-4">
+            <div class="col-md-6 col-lg-6 col-sm-12">
+              <div class="card card-border-left mb-4" *ngFor="let service of branchData?.service"
+                (click)="serviceSelect(service)">
+                <div [ngClass]="service.active == true ?  'active-cat category-card' : 'category-card'">
+                  <div class="card-title mb-0">{{service.name}}</div>
+                  <div class="service-count">{{service?.packages?.length + service?.services?.length}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-6 col-sm-12">
+              <div class="card service-card">
+                <div class="table-responsive">
+                  <table class="table card-table table-vcenter text-nowrap itemlist-table mb-0">
+                    <tbody>
+                      <tr *ngFor="let pack of serviceData?.package">
+                        <td>{{pack.name}}</td>
+                        <td style="width: 150px" class="text-right">
+                          {{pack.duration | hhmm}}
+                        </td>
+                        <td style="width: 140px" class="text-right">
+                          <del class="text-label" *ngIf="pack.special_price">{{currency_symbol}}{{pack.price}}</del>
+                          {{currency_symbol}}{{pack.special_price > 0 ? pack.special_price : pack.price }}
+                        </td>
+                      </tr>
+                      <tr *ngFor="let pack of serviceData?.service">
+                        <td>{{pack.name}}</td>
+                        <td style="width: 150px" class="text-right">
+                          {{pack.duration | hhmm}}
+                        </td>
+                        <td style="width: 140px" class="text-right">
+                          <del class="text-label" *ngIf="pack.special_price">{{currency_symbol}}{{pack.price}}</del>
+                          {{currency_symbol}}{{pack.special_price > 0 ? pack.special_price : pack.price }}
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body p-0">
+          <div class="card-title text-20 border-bottom p-4">Review</div>
+          <div class="row px-3 mb-4">
+            <div class="px-3 m-auto">
+              <div class="d-flex pb-3" *ngFor="let item of branchData?.review">
+                <div style="min-width: 90px">
+                  <img src="{{item?.user?.imageUri}}" alt="" srcset="" class="img-dt" />
+                </div>
+                <div class="bottom-bottom-dashed pb-3">
+                  <div class="card-title m-0">
+                    {{item?.user?.name}}
+                    <span class="float-right">
+                      <i class="fas fa-star star-style" [class.text-info]="item?.star >= 1"></i>
+                      <i class="fas fa-star star-style" [class.text-info]="item?.star >= 2"></i>
+                      <i class="fas fa-star star-style" [class.text-info]="item?.star >= 3"></i>
+                      <i class="fas fa-star star-style" [class.text-info]="item?.star >= 4"></i>
+                      <i class="fas fa-star star-style" [class.text-info]="item?.star >= 5"></i>
+                    </span>
+                  </div>
+                  <p class="m-0 text-small text-label">3 day ago</p>
+                  <p class="m-0 text-label">
+                    {{item?.msg}}
+                  </p>
+                </div>
+              </div>
+              <div class="text-center " *ngIf="branchData?.review?.length == 0">
+                <app-no-data></app-no-data>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

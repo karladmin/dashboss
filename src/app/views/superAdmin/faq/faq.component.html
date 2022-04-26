@@ -1,0 +1,128 @@
+<app-base-header headerText="{{'local.faq' | translate}}">
+</app-base-header>
+<app-loader *ngIf="isLoading == true"></app-loader>
+<div class="page-mt animate__animated animate__fadeInUp" [perfectScrollbar]="{ suppressScrollX: true }">
+    <ng-container>
+        <div [hidden]="isLoading == true">
+        <div class="row mb-4">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-end">
+                <button type="button" (click)="open(modalBasic)" class="btn-dark-blue m-1 btn-lg ml-4">
+                    {{'faq.addN' | translate}}
+                </button>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table card-table table-vcenter mb-0 subscriber-table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">{{'faq.ques' | translate}}</th>
+                                    <th>{{'faq.ans' | translate}}</th>     
+                                    <th class="text-center">{{'faq.edit' | translate}}</th>
+                                    <th>{{'faq.del' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of faq">
+                                    <td class="text-left special"><h5>{{item?.question}}</h5></td>
+                                    <td class="text-justify">{{item.answer}}}</td>
+                                    <td class="text-uppercase text-center ee" (click)="open2(modalBasic,item)">
+                                        <i class="fas fa-edit"></i>
+                                    </td>
+                                    <ng-template #tipContent>{{'faq.det' | translate}}</ng-template>
+                                    <td class="text-uppercase text-center de" (click)="delete(modalDelete,item)" [ngbTooltip]="tipContent">
+                                        <i class="fas fa-trash"></i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </ng-container>
+</div>
+<ng-template #modalBasic let-modal>
+    <div class="modal-header">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h4 class="modal-title">
+                {{'faq.add' | translate}}
+                <span class="float-right">
+                    <i class="fas fa-times" (click)="modal.dismiss('Cross click')"></i>
+                </span>
+            </h4>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+                <label class="text-label">{{'faq.ques' | translate}}</label>
+                <input type="text" [(ngModel)]="data.question" placeholder="" class="form-control form-control-lg" />
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+                <label class="text-label">{{'faq.ans' | translate}}</label>
+                <textarea name="" id="" cols="30" rows="4" placeholder="Answer" class="form-control form-control-lg" [(ngModel)]=data.answer></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-white btn-lg" (click)="modal.dismiss('Cross click')">
+            {{'faq.can' | translate}}
+        </button>
+        <button type="button" class="btn btn-dark-blue m-1 btn-lg ml-4" (click)="modal.close('Save click')">
+            {{'faq.sav' | translate}}
+        </button>
+    </div>
+</ng-template>
+<ng-template #modalUpdate let-modal>
+    <div class="modal-header">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h4 class="modal-title">
+                {{'faq.update' | translate}}
+                <span class="float-right">
+                    <i class="fas fa-times" (click)="modal.dismiss('Cross click')"></i>
+                </span>
+            </h4>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+                <label class="text-label">{{'faq.ques' | translate}}</label>
+                <input type="text" [(ngModel)]="data.question" placeholder="" class="form-control form-control-lg" />
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+                <label class="text-label">{{'faq.ans' | translate}}</label>
+                <textarea name="" id="" cols="30" rows="4" placeholder="Address" class="form-control form-control-lg" [(ngModel)]=data.answer></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-white btn-lg" (click)="modal.dismiss('Cross click')">
+            {{'faq.can' | translate}}
+        </button>
+        <button type="button" class="btn btn-dark-blue m-1 btn-lg ml-4" (click)="modal.close('Save click')">
+            {{'fa1.sav' | translate}}
+        </button>
+    </div>
+</ng-template>
+<ng-template #modalDelete let-modal>
+    <div class="modal-header">
+      <h6 class="modal-title" id="modal-title">{{'faq.deletion' | translate}}</h6>
+      <button type="button" class="close" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <p><strong>{{'faq.sureDelete' | translate}} <span class="text-primary">{{'faq.this' | translate}}</span>{{'faq.qu' | translate}}</strong></p>
+      </div>
+      
+    
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('cancel click')">{{'faq.can' | translate}}</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">{{'faq.yes' | translate}}</button>
+    </div>
+  </ng-template>

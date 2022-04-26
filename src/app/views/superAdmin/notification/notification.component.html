@@ -1,0 +1,135 @@
+<app-base-header headerText="{{ 'local.noti' | translate }}" isTab="false">
+</app-base-header>
+<app-loader *ngIf="isLoading == true"></app-loader>
+<div class="page-mt animate__animated animate__fadeInUp" [perfectScrollbar]="{ suppressScrollX: true }">
+  <div class="row mt-2 margin-top pr-2">
+    <div class="col-md-3 col-lg-3" style="height: calc(100vh - 200px)" [perfectScrollbar]="{ suppressScrollX: true }">
+      <div>
+        <h5 class="tags-title">
+          1. {{ "notification.newAppointment" | translate }} /
+          {{ "notification.cancelAppointment" | translate }}
+        </h5>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>client_name<span>}}</span></h5>
+        </div>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>date_time<span>}}</span></h5>
+        </div>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>branch_name<span>}}</span></h5>
+        </div>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>owner_name<span>}}</span></h5>
+        </div>
+      </div>
+      <div class="mt-3">
+        <h5 class="tags-title">
+          2. {{ "notification.subscriptionBuy" | translate }}
+        </h5>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>owner_name<span>}}</span></h5>
+        </div>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>subscription_price<span>}}</span></h5>
+        </div>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>subscription_name<span>}}</span></h5>
+        </div>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>date<span>}}</span></h5>
+        </div>
+      </div>
+      <div class="mt-3">
+        <h5 class="tags-title">
+          3. {{ "notification.subscriptionExpired" | translate }}
+        </h5>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>owner_name<span>}}</span></h5>
+        </div>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>expiry_date<span>}}</span></h5>
+        </div>
+      </div>
+      <div class="mt-3">
+        <h5 class="tags-title">
+          4. {{ "notification.lifeTimesub" | translate }}
+        </h5>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>name<span>}}</span></h5>
+        </div>
+      </div>
+      <div class="mt-3">
+        <h5 class="tags-title">
+          5. {{ "notification.welcomeUser" | translate }} /
+          {{ "notification.welcomeOwner" | translate }} /
+          {{ "notification.profileChange" | translate }}
+        </h5>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>name<span>}}</span></h5>
+        </div>
+      </div>
+      <div class="mt-3">
+        <h5 class="tags-title">
+          6. {{ "notification.passwordReset" | translate }} /
+          {{ "notification.verifyOtp" | translate }}
+        </h5>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>name<span>}}</span></h5>
+        </div>
+        <div class="tags">
+          <h5 class="mb-2"><span>{{</span>otp<span>}}</span></h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9 col-lg-9" style="height: calc(100vh - 200px)" [perfectScrollbar]="{ suppressScrollX: true }">
+      <div *ngFor="let item of notiData">
+        <div class="pad">
+          <div style="display: flex; justify-content: space-between">
+            <div>
+              <h3>
+                {{ item?.for_what }}
+                (
+                <span *ngIf="item?.for_who == 0">
+                  {{ "notification.owner" | translate }}
+                </span>
+                <span *ngIf="item?.for_who == 1">
+                  {{ "notification.employee" | translate }}
+                </span>
+                <span *ngIf="item?.for_who == 2">
+                  {{ "notification.user" | translate }}
+                </span>
+                )
+              </h3>
+              <p class="label">{{ "notification.emailNoti" | translate }}</p>
+            </div>
+            <div style="text-align: right; display: flex">
+              <div class="form-group mr-2">
+                <input type="text" placeholder="{{ 'notification.email' | translate }}"
+                  class="form-control form-control-lg" name="email" [(ngModel)]="item.email" />
+              </div>
+              <btn-loading btnClass="btn text-capitalize btn-primary btn-lg mt-9 float-left"
+                (click)="testEmailTeplate(item)" [loading]="item.loading">
+                {{ "notification.test" | translate }}
+              </btn-loading>
+            </div>
+          </div>
+
+          <angular-editor [(ngModel)]="item.email_text" [ngModelOptions]="{ standalone: true }" [config]="config">
+          </angular-editor>
+          <div class="md-form margin-top">
+            <p class="label">{{ "notification.push" | translate }}</p>
+            <textarea type="text" id="form7" [(ngModel)]="item.noti_text" rows="5" cols="20"
+              class="md-textarea form-control" mdbInput></textarea>
+            <label for="form7"></label>
+          </div>
+          <div class="btn">
+            <btn-loading btnClass="btn text-capitalize btn-primary btn-lg mt-9 float-left" (click)="saveOwner(item)"
+              [loading]="passwordLoading">
+              <span>{{ "notification.save" | translate }}</span>
+            </btn-loading>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

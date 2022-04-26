@@ -1,0 +1,159 @@
+<app-base-header headerText="{{ 'local.staff' | translate }}"></app-base-header>
+<div class="page-mt animate__animated animate__fadeInUp" [perfectScrollbar]="{ suppressScrollX: true }">
+  <div class="row mb-4">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-end">
+      <button type="button" class="btn-dark-blue m-1 btn-lg ml-4" (click)="open(modalBasic)">
+        {{ "staffCompo.add" | translate }}
+      </button>
+    </div>
+  </div>
+
+  <app-loader *ngIf="isLoading == true"></app-loader>
+  <div class="row" [hidden]="isLoading == true">
+    <div class="col-md-12 col-lg-12">
+      <div class="card">
+        <div class="table-responsive">
+          <table class="table card-table table-vcenter text-nowrap staff-table mb-0">
+            <thead>
+              <tr>
+                <th>{{ "staffCompo.name" | translate }}</th>
+                <th>{{ "staffCompo.email" | translate }}</th>
+                <th class="text-center">
+                  {{ "staffCompo.contact" | translate }}
+                </th>
+                <th class="text-center">{{ "staffCompo.sta" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of pageOfStaff" (click)="open2(modalUpdate, item)">
+                <td class="text-capitalize">{{ item.name }}</td>
+                <td>{{ item.email }}</td>
+                <td class="text-center">{{ item.phone }}</td>
+                <td class="status-block text-center text-uppercase" *ngIf="item.status == 0">
+                  {{ "staffCompo.blck" | translate }}
+                </td>
+                <td class="status-active text-center text-uppercase" *ngIf="item.status == 1">
+                  {{ "staffCompo.active" | translate }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="staff?.length == 0" class="p-3">
+            <img class="img" src="./assets/images/NoData.png" alt="" />
+          </div>
+        </div>
+        <table-paginate [items]="staff" (changePage)="onChangePage($event)" [pageSize]="7"></table-paginate>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalBasic let-modal>
+  <div>
+    <div class="modal-header">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+        <h4 class="modal-title">
+          {{ "staffCompo.addNewStaff" | translate }}
+          <span class="float-right">
+            <i class="fas fa-times" (click)="modal.dismiss('Cross click')"></i>
+          </span>
+        </h4>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-12 form-group mb-3">
+          <label class="text-label">{{ "staffCompo.name" | translate }}</label>
+          <input type="text" placeholder="" class="form-control form-control-lg" [(ngModel)]="staffDataInput.name" />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-12 form-group mb-3">
+          <label class="text-label">{{ "staffCompo.email" | translate }}</label>
+          <input type="text" placeholder="" class="form-control form-control-lg" [(ngModel)]="staffDataInput.email" />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-sm-12 col-md-6 form-group mb-3">
+          <label class="text-label">{{
+            "staffCompo.conNumber" | translate
+            }}</label>
+          <input type="text" placeholder="" class="form-control form-control-lg" [(ngModel)]="staffDataInput.phone" />
+        </div>
+        <div class="col-sm-12 col-md-6 form-group mb-3">
+          <label class="text-label">{{ "staffCompo.pass" | translate }}</label>
+          <input type="password" placeholder="" class="form-control form-control-lg"
+            [(ngModel)]="staffDataInput.password" />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-white btn-lg" (click)="modal.dismiss('Cross click')">
+        {{ "staffCompo.can" | translate }}
+      </button>
+      <button type="button" class="btn btn-dark-blue m-1 btn-lg ml-4" (click)="modal.close('Save click')" [disabled]="
+          staffDataInput.name == null ||
+          staffDataInput.email == null ||
+          staffDataInput.password == null ||
+          staffDataInput.phone == null
+        ">
+        {{ "staffCompo.save" | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalUpdate let-modal>
+  <div class="modal-header">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+      <h4 class="modal-title">
+        {{ "staffCompo.addNewStaff" | translate }}
+        <span class="float-right">
+          <i class="fas fa-times" (click)="modal.dismiss('Cross click')"></i>
+        </span>
+      </h4>
+    </div>
+  </div>
+
+  <div class="modal-body">
+    <div class="row mb-3">
+      <div class="col-sm-12 col-md-12 form-group mb-3">
+        <label class="text-label">{{ "staffCompo.name" | translate }}</label>
+        <input type="text" placeholder="" class="form-control form-control-lg" [(ngModel)]="staffDataInput.name"
+          readonly />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-12 col-md-12 form-group mb-3">
+        <label class="text-label">{{ "staffCompo.email" | translate }}</label>
+        <input type="text" placeholder="" class="form-control form-control-lg" [(ngModel)]="staffDataInput.email"
+          readonly />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-sm-12 col-md-12 form-group mb-3">
+        <label class="text-label">{{
+          "staffCompo.conNumber" | translate
+          }}</label>
+        <input type="text" placeholder="" class="form-control form-control-lg" [(ngModel)]="staffDataInput.phone"
+          readonly />
+      </div>
+      <div class="col-12 mb-3">
+        <label class="switch switch-info mr-3">
+          <span>{{ "staffCompo.ac" | translate }}</span>
+          <input [(ngModel)]="staffDataInput.status" readonly type="checkbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-white btn-lg" (click)="modal.dismiss('Cross click')">
+      {{ "staffCompo.can" | translate }}
+    </button>
+    <button type="button" class="btn btn-dark-blue m-1 btn-lg ml-4" (click)="modal.close('Save click')">
+      {{ "staffCompo.save" | translate }}
+    </button>
+  </div>
+</ng-template>

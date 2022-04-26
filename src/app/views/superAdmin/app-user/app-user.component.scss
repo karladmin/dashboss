@@ -1,0 +1,32 @@
+.img-dt {
+  height: 40px;
+  width: 40px;
+  border-radius: 3px;
+}
+.appuser-table {
+  tbody,
+  thead {
+    tr {
+      outline: none;
+      td,
+      th {
+        padding: 1rem !important;
+      }
+      td {
+        a {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+.img {
+  height: 120px;
+  width: 120px;
+}
+.status-active {
+  color: #11cfbd !important;
+}
+.status-block {
+  color: red !important;
+}

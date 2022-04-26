@@ -1,0 +1,92 @@
+<app-base-header headerText="{{'ownerReport.subscriptionHeader' | translate}}"></app-base-header>
+<app-loader *ngIf="isLoading==true"></app-loader>
+<div class="page-mt animate__animated animate__fadeInUp" [perfectScrollbar]="{ suppressScrollX: true }">
+    <div class="row mb-4">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 l">
+            <div class="form-group mr-5">
+                <label>{{'ownerReport.startDate' | translate}}</label>
+                <input type="date" name="start_date" class="form-control" required="" [(ngModel)]="start_date" />
+            </div>
+        </div>
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 r">
+            <div class="form-group mr-5">
+                <label>{{'ownerReport.endDate' | translate}}</label>
+                <input type="date" name="end_date" class="form-control" required="" [(ngModel)]="end_date" />
+            </div>
+        </div>
+        <btn-loading btnClass="btn text-capitalize btn-success btn-lg mt-9 float-right m" [loading]="loading"
+            (click)="saveOwner('start')">
+            <span>{{'ownerReport.search' | translate}}</span>
+        </btn-loading>
+    </div>
+    <div class="row" *ngIf="data">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <h2>{{'ownerReport.last7Days' | translate}}</h2>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-end mb-4 mt-4">
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-white btn-lg" id="dropdownBasic1" ngbDropdownToggle>
+                    {{'appUsers.options' | translate}}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-item-own">
+                    <button ngbDropdownItem (click)="exportEXCEL()">{{'appUsers.ex' | translate}}</button>
+                    <button ngbDropdownItem (click)="exportCSV()">{{'appUsers.csv' | translate}}</button>
+                    <button ngbDropdownItem (click)="exportPDF()">{{'ownerReport.pdf' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="table-responsive" id="users" #users>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th scope="col">{{'ownerReport.ownerName' | translate}}</th>
+                                <th scope="col">{{'ownerReport.email' | translate}}</th>
+                                <th scope="col">{{'ownerReport.subscription' | translate}}</th>
+                                <th scope="col">{{'ownerReport.price' | translate}}</th>
+                                <th scope="col">{{'ownerReport.onShopBooking' | translate}}</th>
+                                <th scope="col">{{'ownerReport.online' | translate}}</th>
+                                <th scope="col"> {{'ownerReport.aveDay' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let country of data; index as i">
+                                <td>
+                                    {{i + 1}}
+                                </td>
+                                <td>
+                                    {{country.oname}}
+                                </td>
+                                <td>
+                                    {{country.email}}
+                                </td>
+                                <td>
+                                    {{country.subName}}
+                                </td>
+                                <td class="text-right">
+                                    ${{country.price}}
+                                </td>
+                                <td>
+                                    {{ country.onShop}}
+                                </td>
+                                <td>
+                                    {{ country.online}}
+                                </td>
+                                <td>
+                                    {{country.ava}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div *ngIf="data?.length == 0" class="text-center m-4">
+                        <img src="./assets/images/NoData.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

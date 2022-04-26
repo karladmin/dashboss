@@ -1,0 +1,33 @@
+<div class="sidebar-panel animate__animated animate__fadeInLeft" *ngIf="isMenuOpen">
+  <div class="gull-brand overflow-auto pr-3 text-center mt-4 mb-2 d-flex justify-content-end align-items-center"
+    data-perfect-scrollbar data-suppress-scroll-x="true">
+
+  </div>
+  <div class="gull-brand pr-3 overflow-auto text-center mt-4 mb-2 d-flex justify-content-center align-items-center"
+    routerLink="/dashboard/v1" data-perfect-scrollbar data-suppress-scroll-x="true">
+    <img class="pl-3" src="{{ image?.imageUri + image?.value }}" alt="" style="width: 130px" />
+
+  </div>
+  <!-- user -->
+  <div class="scroll-nav ps overflow-auto" data-suppress-scroll-x="true" data-perfect-scrollbar>
+    <!-- user close -->
+    <!-- side-nav start -->
+    <div class="side-nav overflow-auto">
+      <div class="main-menu overflow-auto">
+
+        <ul class="metismenu overflow-auto" id="menu">
+          <p class="main-menu-title text-muted font-weight-700 text-13 mt-0 mb-0"></p>
+          <li (click)="onClickChangeActiveFlag(item)" *ngFor="let item of nav">
+            <a class="" [routerLink]="item.state" [ngClass]="{ 'active-menu': item.active }">
+              <img class="sidebar-img" [class.sidebar-imgleft]="lan == 'ar'"
+                [src]="'./assets/images/icons/' + item.icon" alt="" srcset="" />
+              <span class="item-name text-15 text-muted">{{ item.name }} </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- side-nav-close -->
+</div>

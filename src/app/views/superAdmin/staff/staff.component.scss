@@ -1,0 +1,25 @@
+.staff-table {
+  tbody,
+  thead {
+    tr {
+      outline: none;
+      td {
+        border-right: 1px dashed #dee2e6;
+
+        &:last-child {
+          border-right: 0px;
+        }
+      }
+    }
+  }
+  .status-active {
+    color: #11cfbd !important;
+  }
+  .status-block {
+    color: red !important;
+  }
+}
+.img{
+  height: 120px;
+  width: 120px;
+}

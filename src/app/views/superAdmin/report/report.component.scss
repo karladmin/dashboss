@@ -1,0 +1,31 @@
+.card.card-large-icons {
+    display: flex;
+    flex-direction: row;
+}
+.card { 
+    background-color: #fff;
+    border-radius: 3px;
+    border: none;
+    position: relative;
+    margin-bottom: 30px;
+}
+.card.card-large-icons .card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 150px;
+    border-radius: 3px 0 0 3px;
+    i{
+        font-size: 60px;
+    }
+}
+.card.card-large-icons .card-body {
+    padding: 25px 30px;
+}
+.card.card-large-icons .card-body h4 {
+    font-size: 18px;
+}.card.card-large-icons .card-body p {
+    opacity: .6;
+    font-weight: 500;
+}

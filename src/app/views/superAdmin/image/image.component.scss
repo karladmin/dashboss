@@ -1,0 +1,55 @@
+img {
+    text-align: center;
+    height: 150px;
+    width: 150px;
+    margin-top: 15px;
+    margin-bottom: 17px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.h4 {
+    cursor: pointer !important;
+}
+.btn-dark-blue{
+    cursor: pointer !important;
+}
+.imageData {
+    margin: 15px;
+    img{
+        margin: 10;
+        height: 200px;
+        width: 200px;
+        border-radius: 10px;
+        cursor: pointer;
+        object-fit: cover;
+    }
+}
+.im {
+    margin: 10;
+    height: 200px;
+    width: 200px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.edit {
+    display: inline-flex;
+    text-align: center;
+    width: 100%;
+    text-align: center;
+    margin-left: 10px;
+    margin: 0;
+    p {
+        font-size: 18px;
+        text-align: center;
+        margin-left: 5px;
+        cursor: pointer !important;
+    }
+    p:last-child {
+        color: red !important;
+        font-size: 14px !important;
+        text-align: center !important;
+        margin-left: 10px !important;
+        padding-top: 3px !important;
+        cursor: pointer !important;
+    }
+}

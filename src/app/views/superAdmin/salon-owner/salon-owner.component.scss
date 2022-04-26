@@ -1,0 +1,23 @@
+.subscriber-table {
+  tbody,
+  thead {
+    tr {
+      outline: none;
+      td {
+        border-right: 1px dashed #dee2e6;
+        a {
+          cursor: pointer;
+        }
+        &:last-child {
+          border-right: 0px;
+        }
+      }
+    }
+  }
+  .status-active {
+    color: #11cfbd !important;
+  }
+}
+.red {
+  color: red;
+}

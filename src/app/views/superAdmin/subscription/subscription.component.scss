@@ -1,0 +1,48 @@
+.plantype-table,
+.subscriber-table {
+  tbody,
+  thead {
+    tr {
+      td,
+      th {
+        border-right: 1px dashed #dee2e6;
+
+        &:last-child {
+          border-right: 0px;
+        }
+      }
+    }
+  }
+}
+.subscriber-table {
+  thead {
+    tr {
+      th {
+        border-right: 0px;
+      }
+    }
+  }
+  .status-active {
+    color: #11cfbd !important;
+  }
+}
+.de {
+  cursor: pointer;
+  i {
+    color: red;
+  }
+}
+.list-group {
+  li {
+    display: flex;
+    p {
+      width: 150px;
+    }
+  }
+}
+::ng-deep.modal-dialog-scrollable {
+  .modal-body {
+    max-height: calc(100vh - 227px);
+    overflow-y: auto;
+  }
+}

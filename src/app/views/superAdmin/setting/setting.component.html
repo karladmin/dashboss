@@ -1,0 +1,693 @@
+<app-base-header headerText="{{ 'settings.label' | translate }}"></app-base-header>
+<app-loader *ngIf="isLoading == true"></app-loader>
+<div class="page-mt animate__animated animate__fadeInUp" [perfectScrollbar]="{ suppressScrollX: true }">
+  <div class="row">
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="card mb-4" (click)="scroll(basic)">
+            <div class="card-body p-0">
+              <div class="ba">
+                <h4>
+                  {{ "settingCompo.basic" | translate }}
+                  <span class="float-right">
+                    <img src="../../../../assets/images/Chevron_Right.svg" alt="" />
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4" (click)="scroll(app)">
+            <div class="card-body p-0">
+              <div class="ba">
+                <h4>
+                  {{ "settingCompo.appInfo" | translate }}
+                  <span class="float-right">
+                    <img src="../../../../assets/images/Chevron_Right.svg" alt="" />
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-4" (click)="scroll(targetTwillio)">
+            <div class="card-body p-0">
+              <div class="ba">
+                <h4>
+                  {{ "settingCompo.twiSetting" | translate }}
+                  <span class="float-right">
+                    <img src="../../../../assets/images/Chevron_Right.svg" alt="" />
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-4" (click)="scroll(v)">
+            <div class="card-body p-0">
+              <div class="ba">
+                <h4>
+                  {{ "settingCompo.verifyType" | translate }}
+                  <span class="float-right">
+                    <img src="../../../../assets/images/Chevron_Right.svg" alt="" />
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4" (click)="scroll(payment)">
+            <div class="card-body p-0">
+              <div class="ba">
+                <h4>
+                  {{ "settingCompo.payGateway" | translate }}
+                  <span class="float-right">
+                    <img src="../../../../assets/images/Chevron_Right.svg" alt="" />
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4" (click)="scroll(target)">
+            <div class="card-body p-0">
+              <div class="ba">
+                <h4>
+                  {{ "settingCompo.pushNoti" | translate }}
+                  <span class="float-right">
+                    <img src="../../../../assets/images/Chevron_Right.svg" alt="" />
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4" (click)="scroll(basic)">
+            <div class="card-body p-0">
+              <div class="ba">
+                <h4>
+                  {{ "settingCompo.bTypeSetting" | translate }}
+                  <span class="float-right">
+                    <img src="../../../../assets/images/Chevron_Right.svg" alt="" />
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4" (click)="scroll(contact)">
+            <div class="card-body p-0">
+              <div class="ba">
+                <h4>
+                  {{ "settingCompo.contactUs" | translate }}
+                  <span class="float-right">
+                    <img src="../../../../assets/images/Chevron_Right.svg" alt="" />
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4" (click)="scroll(content)">
+            <div class="card-body p-0">
+              <div class="ba">
+                <h4>
+                  {{ "settingCompo.content" | translate }}
+                  <span class="float-right">
+                    <img src="../../../../assets/images/Chevron_Right.svg" alt="" />
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+          <div class="card mb-4" (click)="scroll(mail)">
+            <div class="card-body p-0">
+              <div class="ba">
+                <h4>
+                  {{ "settingCompo.mailSetting" | translate }}
+                  <span class="float-right">
+                    <img src="../../../../assets/images/Chevron_Right.svg" alt="" />
+                  </span>
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" style="height: calc(100vh - 185px)"
+      [perfectScrollbar]="{ suppressScrollX: true }">
+      <div>
+        <div class="card mb-4" #basic>
+          <div class="card-body p-0">
+            <div class="card-title text-20 border-bottom p-4">
+              {{ "settings.basic" | translate }}
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">{{
+                "settingCompo.cureCode" | translate
+                }}</label>
+              <select name="priceType" [(ngModel)]="currency_code" class="form-control form-control-lg"
+                (change)="changeCurency()">
+                <option *ngFor="let currency of currencyData" value="{{ currency.code }}">
+                  {{ currency.code }}
+                </option>
+              </select>
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">{{
+                "settingCompo.symbol" | translate
+                }}</label>
+              <input id="symbol" type="text" name="symbol" readonly class="form-control form-control-lg"
+                [(ngModel)]="currency_symbol" />
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.textLogo" | translate }}
+              </label>
+              <br />
+              <img class="text" src="{{ text_uri }}" alt="" />
+              <input id="profileimg" type="file" accept="image/*" placeholder="Choose No File"
+                (change)="updateSource($event)" class="form-control form-control-lg" />
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.mainLogo" | translate }}
+              </label>
+              <br />
+              <img class="main" src="{{ main_uri }}" alt="" />
+              <input id="profileimg" type="file" accept="image/*" (change)="updateSource2($event)"
+                class="form-control form-control-lg" />
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-0">
+              <label class="checkbox checkbox-primary">
+                <input type="checkbox" [(ngModel)]="pushNotification" />
+                <span class="text-16">
+                  {{ "settings.enableNotification" | translate }}
+                </span>
+                <span class="checkmark" style="margin-top: 4px"></span></label>
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-3 mt-3">
+              <label class="text-label">{{
+                "settingCompo.timezone" | translate
+                }}</label>
+              <select name="priceType" [(ngModel)]="zone" class="form-control form-control-lg">
+                <option *ngFor="let time of timezone" value="{{ time.TimeZone }}">
+                  ({{time.UTC_offset}}) {{ time.TimeZone }}
+                </option>
+              </select>
+            </div>
+            <div class="col-12 text-end p-3 pt-0 pb-4">
+              <button class="btn btn-white btn-lg" routerLink="/customers">
+                {{ "settings.reset" | translate }}
+              </button>
+              <button type="button" class="btn btn-dark-blue m-1 btn-lg ml-4" (click)="basisc()">
+                {{ "settings.submit" | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-4" #app>
+        <div class="card-body p-0">
+          <div class="card-title text-20 border-bottom p-4">
+            {{ "settings.appInfo" | translate }}
+          </div>
+          <div class="row px-3">
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">{{ "settings.ios" | translate }}</label>
+              <input type="text" placeholder="IOS Version" class="form-control form-control-lg" [(ngModel)]="ios_app" />
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">{{
+                "settings.android" | translate
+                }}</label>
+              <input type="text" placeholder="Android Version" class="form-control form-control-lg"
+                [(ngModel)]="android_app" />
+            </div>
+          </div>
+          <div class="col-12 text-end p-3 pt-0 pb-4">
+            <button class="btn btn-white btn-lg" routerLink="/customers">
+              {{ "settings.reset" | translate }}
+            </button>
+            <button type="button" (click)="versionUpdate()" class="btn btn-dark-blue m-1 btn-lg ml-4">
+              {{ "settings.submit" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-4" #payment>
+        <div class="card-body p-0">
+          <div class="card-title text-20 border-bottom p-4">
+            {{ "settings.payment" | translate }}
+          </div>
+          <div class="row px-3 mb-3">
+            <div class="col-12 mb-3">
+              <label class="switch switch-info mr-3">
+                <span>{{ "settings.striGa" | translate }}</span>
+                <input [(ngModel)]="stripe" type="checkbox" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">{{
+                "settings.strippe" | translate
+                }}</label>
+              <input type="text" placeholder="Stripe Secret" class="form-control form-control-lg"
+                [(ngModel)]="stripe_secret" />
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.stripekey" | translate }}
+              </label>
+              <input type="text" placeholder="Stripe Key" class="form-control form-control-lg"
+                [(ngModel)]="stripe_key" />
+            </div>
+          </div>
+          <div class="row px-3 mb-3">
+            <div class="col-12 mb-3">
+              <label class="switch switch-info mr-3">
+                <span>{{ "settings.paypal" | translate }}</span>
+                <input [(ngModel)]="paypal" type="checkbox" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.production" | translate }}
+              </label>
+              <input type="text" placeholder="Production Client ID" class="form-control form-control-lg"
+                [(ngModel)]="paypal_client_id" />
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.sandbox" | translate }}
+              </label>
+              <input type="text" placeholder="Sandbox Client ID" class="form-control form-control-lg" />
+            </div>
+          </div>
+          <div class="row px-3 mb-3">
+            <div class="col-12 mb-3">
+              <label class="switch switch-info mr-3">
+                <span>{{ "settings.razor" | translate }}</span>
+                <input [(ngModel)]="razor" type="checkbox" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">{{
+                "settings.razorKey" | translate
+                }}</label>
+              <input type="text" placeholder="Razorpay Key" class="form-control form-control-lg"
+                [(ngModel)]="razor_pay_key" />
+            </div>
+          </div>
+          <div class="col-12 text-end p-3 pt-0 pb-4">
+            <button class="btn btn-white btn-lg" routerLink="/customers">
+              {{ "settings.reset" | translate }}
+            </button>
+            <button type="button" (click)="paymentGateway()" class="btn btn-dark-blue m-1 btn-lg ml-4">
+              {{ "settings.submit" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-4" #target>
+        <div class="card-body p-0">
+          <div class="card-title text-20 border-bottom p-4">
+            {{ "settings.pushNoti" | translate }}
+          </div>
+          <div class="row px-3">
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.appId" | translate }}
+              </label>
+              <input type="text" placeholder="App ID" [(ngModel)]="APP_ID" class="form-control form-control-lg" />
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.restApiKey" | translate }}
+              </label>
+              <input type="text" placeholder="Rest API Key" [(ngModel)]="REST_API_KEY"
+                class="form-control form-control-lg" />
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.userAuthKey" | translate }}
+              </label>
+              <input type="text" placeholder="User Auth Key" [(ngModel)]="USER_AUTH_KEY"
+                class="form-control form-control-lg" />
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.proNumber" | translate }}
+              </label>
+              <input type="text" placeholder="Project Number" class="form-control form-control-lg" />
+            </div>
+          </div>
+          <div class="col-12 text-end p-3 pt-0 pb-4">
+            <button class="btn btn-white btn-lg" routerLink="/customers">
+              {{ "settings.reset" | translate }}
+            </button>
+            <button type="button" class="btn btn-dark-blue m-1 btn-lg ml-4" (click)="pushNoti()">
+              {{ "settings.submit" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-4" #targetTwillio>
+        <div class="card-body p-0">
+          <div class="card-title text-20 border-bottom p-4">
+            {{ "settingCompo.twiSetting" | translate }}
+          </div>
+          <div class="row px-3">
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.twillioSid" | translate }}
+              </label>
+              <input type="text" placeholder="TWILIO_SID" [(ngModel)]="TWILIO_SID"
+                class="form-control form-control-lg" />
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.twilioAuthToken" | translate }}
+              </label>
+              <input type="text" placeholder="TWILIO_AUTH_TOKEN" [(ngModel)]="TWILIO_AUTH_TOKEN"
+                class="form-control form-control-lg" />
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.twiNumber" | translate }}
+              </label>
+              <input type="text" placeholder="TWILIO_NUMBER" [(ngModel)]="TWILIO_NUMBER"
+                class="form-control form-control-lg" />
+            </div>
+          </div>
+          <div class="col-12 text-end p-3 pt-0 pb-4">
+            <button class="btn btn-white btn-lg" routerLink="/customers">
+              {{ "settings.reset" | translate }}
+            </button>
+            <button type="button" class="btn btn-dark-blue m-1 btn-lg ml-4" (click)="twilliio()">
+              {{ "settings.submit" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-4" #business>
+        <div class="card-body p-0">
+          <div class="card-title text-20 border-bottom p-4">
+            {{ "settings.businessType" | translate }}
+          </div>
+          <div class="row px-3">
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.free" | translate }}
+              </label>
+              <input type="number" placeholder="0" class="form-control form-control-lg"
+                [(ngModel)]="free_on_shop_booking" />
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.online" | translate }}
+              </label>
+              <input type="number" placeholder="0" class="form-control form-control-lg"
+                [(ngModel)]="free_online_booking" />
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.freeDay" | translate }}
+              </label>
+              <input type="number" placeholder="100" class="form-control form-control-lg" [(ngModel)]="free_day" />
+            </div>
+          </div>
+          <div class="col-12 text-end p-3 pt-0 pb-4">
+            <button class="btn btn-white btn-lg" routerLink="/customers">
+              {{ "settings.reset" | translate }}
+            </button>
+            <button type="button" [disabled]="
+                free_on_shop_booking == null ||
+                free_day == null ||
+                free_online_booking == null
+              " (click)="updateBusiness()" class="btn btn-dark-blue m-1 btn-lg ml-4">
+              {{ "settings.submit" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-4" #contact>
+        <div class="card-body p-0">
+          <div class="card-title text-20 border-bottom p-4">
+            {{ "settings.contactUs" | translate }}
+          </div>
+          <div class="row px-3">
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.phone" | translate }}
+              </label>
+              <input type="text" placeholder="+1-202-555-0147" class="form-control form-control-lg"
+                [(ngModel)]="phone_no" />
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.email" | translate }}
+              </label>
+              <input type="text" placeholder="support@email.com" class="form-control form-control-lg"
+                [(ngModel)]="email" />
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">
+                {{ "settings.address" | translate }}
+              </label>
+              <textarea name="" id="" cols="30" rows="4" placeholder="Address" class="form-control form-control-lg"
+                [(ngModel)]="address"></textarea>
+            </div>
+          </div>
+          <div class="col-12 text-end p-3 pt-0 pb-4">
+            <button class="btn btn-white btn-lg" routerLink="/customers">
+              {{ "settings.reset" | translate }}
+            </button>
+            <button type="button" [disabled]="phone_no == '' || address == '' || email == ''" (click)="contactUpdate()"
+              class="btn btn-dark-blue m-1 btn-lg ml-4">
+              {{ "settings.submit" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4" #content>
+        <div class="card-body p-0">
+          <div class="card-title text-20 border-bottom p-4">
+            {{ "settings.content" | translate }}
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
+              <div class="margin-left">
+                <h4>{{ "settings.pri" | translate }}</h4>
+                <angular-editor [(ngModel)]="privacy" [ngModelOptions]="{ standalone: true }" [config]="config">
+                </angular-editor>
+              </div>
+
+              <div class="margin-left">
+                <h4>{{ "settings.terms" | translate }}</h4>
+                <angular-editor [(ngModel)]="terms" [ngModelOptions]="{ standalone: true }" [config]="config">
+                </angular-editor>
+              </div>
+
+              <div class="margin-left">
+                <h4>{{ "settings.about" | translate }}</h4>
+                <angular-editor [(ngModel)]="about" [ngModelOptions]="{ standalone: true }" [config]="config">
+                </angular-editor>
+              </div>
+            </div>
+            <div class="col-12 text-end p-3 pt-0 pb-4">
+              <button class="btn btn-white btn-lg" routerLink="/customers">
+                {{ "settings.reset" | translate }}
+              </button>
+              <btn-loading btnClass="btn text-capitalize btn-primary btn-lg mt-9 float-right"
+                [loading]="passwordLoading" (click)="saveOwner()">
+                <span>{{ "settings.submit" | translate }}</span>
+              </btn-loading>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4" #mail>
+        <div class="card-body p-0">
+          <div class="card-title text-20 border-bottom p-4">
+            {{ "settingCompo.mail" | translate }}
+          </div>
+          <div class="row px-3">
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.apName" | translate }}
+              </label>
+              <input type="text" placeholder="dashboss" class="form-control form-control-lg" [(ngModel)]="APP_NAME" />
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.mailMailer" | translate }}
+              </label>
+              <input type="text" placeholder="smtp" class="form-control form-control-lg" [(ngModel)]="MAIL_MAILER" />
+            </div>
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.mailHost" | translate }}
+              </label>
+              <input type="text" placeholder="smtp.gmail.com" class="form-control form-control-lg"
+                [(ngModel)]="MAIL_HOST" />
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.mailPort" | translate }}
+              </label>
+              <input name="" id="" placeholder="465" class="form-control form-control-lg" [(ngModel)]="MAIL_PORT" />
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.mailUsername" | translate }}
+              </label>
+              <input name="" id="" placeholder="devsalltime@gmail.com" class="form-control form-control-lg"
+                [(ngModel)]="MAIL_USERNAME" />
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.mailPassord" | translate }}
+              </label>
+              <input name="" id="" placeholder="Devs@74242" class="form-control form-control-lg"
+                [(ngModel)]="MAIL_PASSWORD" />
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.mailEncryption" | translate }}
+              </label>
+              <input name="" id="" placeholder="ssl" class="form-control form-control-lg"
+                [(ngModel)]="MAIL_ENCRYPTION" />
+            </div>
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.mailFromAddress" | translate }}
+              </label>
+              <input name="" id="" placeholder="devsalltime@gmail.com" class="form-control form-control-lg"
+                [(ngModel)]="MAIL_FROM_ADDRESS" />
+            </div>
+          </div>
+          <div class="col-12 text-end p-3 pt-0 pb-4">
+            <button class="btn btn-white btn-lg" routerLink="/customers">
+              {{ "settings.reset" | translate }}
+            </button>
+            <button type="button" (click)="mailUpdate()" class="btn btn-dark-blue m-1 btn-lg ml-4">
+              {{ "settings.submit" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-4" #v>
+        <div class="card-body p-0">
+          <div class="card-title text-20 border-bottom p-4">
+            {{ "settingCompo.imageCompressSetting" | translate }}
+          </div>
+          <div class="row px-3">
+            <div class="col-sm-12 col-md-6 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.imageCompress" | translate }}
+              </label>
+              <label class="checkbox checkbox-primary">
+                <input type="checkbox" [(ngModel)]="image_compressor" />
+                <span class="text-16">
+                  {{ "settingCompo.imageCompressor" | translate }}</span>
+                <span class="checkmark" style="margin-top: 4px"></span>
+              </label>
+            </div>
+          </div>
+          <button class="
+              btn
+              text-capitalize
+              btn-primary btn-lg
+              mt-9
+              float-right
+              mb-4
+              mr-4
+            " (click)="imageCompress()">
+            <span>{{ "settings.submit" | translate }}</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="card mb-4" #v>
+        <div class="card-body p-0">
+          <div class="card-title text-20 border-bottom p-4">
+            {{ "settingCompo.vType" | translate }}
+          </div>
+          <div class="row px-3">
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.verificationTypeTitle" | translate }}
+              </label>
+              <label class="radio radio-secondary">
+                <input type="radio" name="sms" value="0" [(ngModel)]="verification_type" />
+                <span class="text-16">
+                  {{ "settingCompo.sms_verify" | translate }}
+                </span>
+                <span class="checkmark" style="margin-top: 4px"></span>
+              </label>
+              <label class="radio radio-secondary">
+                <input type="radio" name="email" value="1" [(ngModel)]="verification_type" />
+                <span class="text-16">
+                  {{ "settingCompo.email_verify" | translate }}
+                </span>
+                <span class="checkmark" style="margin-top: 4px"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="row px-3">
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.verifyUser" | translate }}
+              </label>
+              <label class="checkbox checkbox-primary">
+                <input type="checkbox" [(ngModel)]="verification_user" />
+                <span class="text-16">
+                  {{ "settingCompo.userVerifyDes" | translate }}
+                </span>
+                <span class="checkmark" style="margin-top: 4px"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="row px-3">
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.verifyVendor" | translate }}
+              </label>
+              <label class="checkbox checkbox-primary">
+                <input type="checkbox" [(ngModel)]="verification_vendor" />
+                <span class="text-16">
+                  {{ "settingCompo.vendorVerificationDes" | translate }}
+                </span>
+                <span class="checkmark" style="margin-top: 4px"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="row px-3">
+            <div class="col-sm-12 col-md-12 form-group mb-3">
+              <label class="text-label">
+                {{ "settingCompo.admin_two_factor_auth" | translate }}
+              </label>
+              <label class="checkbox checkbox-primary">
+                <input type="checkbox" [(ngModel)]="signInAdminVerify" />
+                <span class="text-16">
+                  {{ "settingCompo.authenticate" | translate }}
+                </span>
+                <span class="checkmark" style="margin-top: 4px"></span>
+              </label>
+            </div>
+          </div>
+          <btn-loading btnClass="btn text-capitalize btn-primary btn-lg mt-9 float-right mb-4 mr-4"
+            [loading]="passwordLoading" (click)="verificationType()">
+            <span>{{ "settings.submit" | translate }}</span>
+          </btn-loading>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
