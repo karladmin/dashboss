@@ -1,1 +1,1 @@
-header responsive 
+header responsive s
