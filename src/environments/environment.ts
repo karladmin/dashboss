@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://backend.spotier.com/public/api/admin/',
+  // apiBaseUrl: 'https://backend.spotier.com/public/api/admin/',
+  apiBaseUrl: 'http://127.0.0.1:8000/api/admin/',
 };
 
 export const currency = [

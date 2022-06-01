@@ -144,5 +144,8 @@
       }
     }
   },
-  "defaultProject": "gull"
+  "defaultProject": "gull",
+  "cli": {
+    "analytics": false
+  }
 }

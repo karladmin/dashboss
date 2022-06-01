@@ -60,6 +60,7 @@ export class SubscriptionComponent implements OnInit {
     },
   ];
 
+ 
   constructor(
     private modalService: NgbModal,
     private api: ApiService,
@@ -74,6 +75,7 @@ export class SubscriptionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.api.getDataWithToken('setting').subscribe(
       (success: any) => {
         if (success.success) {
@@ -212,6 +214,7 @@ export class SubscriptionComponent implements OnInit {
   }
 
   open2(content, i) {
+    
     this.data2 = i;
     console.log('this data2', this.data2);
     if (this.data2.desc) {
@@ -237,11 +240,11 @@ export class SubscriptionComponent implements OnInit {
 
           let status;
           this.data2.status == true ? 1 : 0;
-
           this.api
             .putDataWithToken('subscription/' + i.id, this.data2)
             .subscribe(
               (success: any) => {
+               
                 if (success.success) {
                   this.toast.success('Updated Successfully');
                   this.api.sub.next(true);
@@ -266,6 +269,7 @@ export class SubscriptionComponent implements OnInit {
   }
 
   open3(content, item, type, e?) {
+  
     if (e) {
       e.target.closest('datatable-body-cell').blur();
     }
@@ -318,6 +322,7 @@ export class SubscriptionComponent implements OnInit {
   }
 
   searchSubCode(searchTerm) {
+
     this.subscriptionCodeData = this.backupData.subscriptionCodeData;
     if (
       searchTerm &&
@@ -343,6 +348,7 @@ export class SubscriptionComponent implements OnInit {
   }
 
   saveEditSubscription(modal) {
+  
     const data = {
       on_shop_booking:
         this.editActiveSubData.is_lifetime == false
@@ -370,6 +376,7 @@ export class SubscriptionComponent implements OnInit {
   }
 
   addSubscriptionCode(modal) {
+   
     if (this.isEditSub) {
       let data = Object.assign({}, this.addSubData);
       this.isLoading = true;
@@ -421,6 +428,7 @@ export class SubscriptionComponent implements OnInit {
   }
 
   editSubCode(content, item, e) {
+    
     e.target.closest('datatable-body-cell').blur();
 
     if (item.used == 1) {

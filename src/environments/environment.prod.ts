@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   apiBaseUrl: 'https://backend.spotier.com/public/api/admin/',
+  // apiBaseUrl: 'http://127.0.0.1:8000/api/admin/',
 };
 export const currency = [
   {

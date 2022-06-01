@@ -17,6 +17,7 @@ export class AppComponent {
     private api: ApiService,
     private router: Router
   ) {
+    this.logOut();
     console.log = function () {};
     if (localStorage.getItem('lan')) {
       if (localStorage.getItem('lan') == 'en') {
@@ -35,6 +36,17 @@ export class AppComponent {
     }
     this.checkProfileData();
   }
+
+  logOut(){
+   
+    if(localStorage.getItem('demo_login_status')=='false') {
+      // console.info(localStorage.getItem('demo_login_status'));
+      this.router.navigateByUrl('/sessions/signin');
+      return false;  
+      
+  }
+}
+
 
   checkProfileData() {
     this.api.getDataWithToken('profile').subscribe(

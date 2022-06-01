@@ -67,6 +67,7 @@ export class SigninComponent implements OnInit {
           this.loading = false;
           this.api.userToken = success.data.token;
           this.store.setItem('token', success.data.token);
+          this.store.setItem('demo_login_status', true);
           this.api.isNewLogin.next(true);
           this.toast.success(success.msg);
         } else if (success.twofactor) {
